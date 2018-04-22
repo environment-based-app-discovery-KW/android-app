@@ -10,7 +10,14 @@ import android.support.v7.widget.Toolbar;
 import android.view.View;
 import android.widget.Toast;
 
+import com.google.gson.Gson;
+
+import org.json.JSONArray;
+import org.json.JSONException;
+import org.json.JSONObject;
+
 import java.io.IOException;
+import java.lang.reflect.Type;
 
 import io.cordova.hellocordova.R;
 import io.cordova.hellocordova.WebViewActivity;
@@ -44,7 +51,11 @@ public class MainActivity extends AppCompatActivity {
 
                 try {
                     Response response = client.newCall(request).execute();
-                    Toast.makeText(MainActivity.this, response.body().string(), Toast.LENGTH_SHORT).show();
+                    String jsonData = response.body().string();
+                    Gson gson = new Gson();
+                    WebApp app = gson.fromJson(jsonData, WebApp.class);
+
+                    Toast.makeText(MainActivity.this, app.name, Toast.LENGTH_SHORT).show();
                 } catch (IOException e) {
                     e.printStackTrace();
                 }
