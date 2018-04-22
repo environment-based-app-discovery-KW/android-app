@@ -54,8 +54,9 @@ public class MainActivity extends AppCompatActivity {
                     String jsonData = response.body().string();
                     Gson gson = new Gson();
                     WebApp app = gson.fromJson(jsonData, WebApp.class);
-
-                    Toast.makeText(MainActivity.this, app.name, Toast.LENGTH_SHORT).show();
+                    app.setContext(MainActivity.this);
+//                    Toast.makeText(MainActivity.this, app.name, Toast.LENGTH_SHORT).show();
+                    app.downloadAndRun();
                 } catch (IOException e) {
                     e.printStackTrace();
                 }
