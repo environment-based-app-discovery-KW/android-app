@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
-    package="com.appdiscovery.androidapp"
+    package="com.appdiscovery.app"
     android:hardwareAccelerated="true"
     android:versionCode="10000"
     android:versionName="1.0.0">
@@ -48,7 +48,7 @@
         android:label="@string/app_name"
         android:supportsRtl="true">
         <activity
-            android:name="io.appdiscovery.com.appdiscovery.androidapp.WebViewActivity"
+            android:name=".WebViewActivity"
             android:configChanges="orientation|keyboardHidden|keyboard|screenSize|locale"
             android:label="@string/activity_name"
             android:launchMode="singleTop"
@@ -89,7 +89,7 @@
         </provider>
 
         <activity
-            android:name="com.appdiscovery.app.MainActivity"
+            android:name=".MainActivity"
             android:label="@string/title_activity_main"
             android:theme="@style/AppTheme.NoActionBar">
             <intent-filter android:label="@string/launcher_name">

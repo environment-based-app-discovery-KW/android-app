@@ -10,7 +10,6 @@ import com.google.gson.Gson;
 
 import java.io.IOException;
 
-import com.appdiscovery.androidapp.R;
 import okhttp3.OkHttpClient;
 import okhttp3.Request;
 import okhttp3.Response;

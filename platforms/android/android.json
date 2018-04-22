@@ -167,49 +167,49 @@
   },
   "installed_plugins": {
     "cordova-plugin-whitelist": {
-      "PACKAGE_NAME": "io.cordova.hellocordova"
+      "PACKAGE_NAME": "com.appdiscovery.androidapp"
     },
     "cordova-plugin-geolocation": {
-      "PACKAGE_NAME": "io.cordova.hellocordova"
+      "PACKAGE_NAME": "com.appdiscovery.androidapp"
     },
     "cordova-plugin-x-toast": {
-      "PACKAGE_NAME": "io.cordova.hellocordova"
+      "PACKAGE_NAME": "com.appdiscovery.androidapp"
     },
     "cordova-plugin-network-information": {
-      "PACKAGE_NAME": "io.cordova.hellocordova"
+      "PACKAGE_NAME": "com.appdiscovery.androidapp"
     },
     "cordova-plugin-device": {
-      "PACKAGE_NAME": "io.cordova.hellocordova"
+      "PACKAGE_NAME": "com.appdiscovery.androidapp"
     },
     "cordova-plugin-badge": {
-      "PACKAGE_NAME": "io.cordova.hellocordova"
+      "PACKAGE_NAME": "com.appdiscovery.androidapp"
     },
     "cordova-plugin-local-notification": {
-      "PACKAGE_NAME": "io.cordova.hellocordova"
+      "PACKAGE_NAME": "com.appdiscovery.androidapp"
     },
     "cordova-plugin-file": {
-      "PACKAGE_NAME": "io.cordova.hellocordova"
+      "PACKAGE_NAME": "com.appdiscovery.androidapp"
     },
     "cordova-plugin-media": {
-      "PACKAGE_NAME": "io.cordova.hellocordova"
+      "PACKAGE_NAME": "com.appdiscovery.androidapp"
     },
     "ionic-plugin-keyboard": {
-      "PACKAGE_NAME": "io.cordova.hellocordova"
+      "PACKAGE_NAME": "com.appdiscovery.androidapp"
     },
     "cordova-plugin-inappbrowser": {
-      "PACKAGE_NAME": "io.cordova.hellocordova"
+      "PACKAGE_NAME": "com.appdiscovery.androidapp"
     },
     "cordova-plugin-file-transfer": {
-      "PACKAGE_NAME": "io.cordova.hellocordova"
+      "PACKAGE_NAME": "com.appdiscovery.androidapp"
     },
     "cordova-plugin-media-capture": {
-      "PACKAGE_NAME": "io.cordova.hellocordova"
+      "PACKAGE_NAME": "com.appdiscovery.androidapp"
     },
     "cordova-plugin-camera": {
-      "PACKAGE_NAME": "io.cordova.hellocordova"
+      "PACKAGE_NAME": "com.appdiscovery.androidapp"
     },
     "cordova-plugin-qrscanner": {
-      "PACKAGE_NAME": "io.cordova.hellocordova"
+      "PACKAGE_NAME": "com.appdiscovery.androidapp"
     }
   },
   "dependent_plugins": {},
