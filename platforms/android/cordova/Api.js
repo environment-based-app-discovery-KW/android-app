@@ -66,7 +66,6 @@ function Api (platform, platformRootDir, events) {
         root: self.root,
         www: path.join(self.root, 'assets/www'),
         res: path.join(self.root, 'res'),
-        platformWww: path.join(self.root, 'platform_www'),
         configXml: path.join(self.root, 'res/xml/config.xml'),
         defaultConfigXml: path.join(self.root, 'cordova/defaults.xml'),
         strings: path.join(self.root, 'res/values/strings.xml'),

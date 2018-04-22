@@ -61,7 +61,6 @@ function AndroidProject (projectDir) {
     this._subProjectDirs = {};
     this._dirty = false;
     this.projectDir = projectDir;
-    this.platformWww = path.join(this.projectDir, 'platform_www');
     this.www = path.join(this.projectDir, 'assets/www');
     if (AndroidStudio.isAndroidStudioProject(projectDir) === true) {
         this.www = path.join(this.projectDir, 'app/src/main/assets/www');
