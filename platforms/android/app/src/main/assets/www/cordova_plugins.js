@@ -373,14 +373,6 @@ module.exports = [
     "runs": true
   },
   {
-    "id": "cordova-clipboard.Clipboard",
-    "file": "plugins/cordova-clipboard/www/clipboard.js",
-    "pluginId": "cordova-clipboard",
-    "clobbers": [
-      "cordova.plugins.clipboard"
-    ]
-  },
-  {
     "id": "cordova-plugin-camera.Camera",
     "file": "plugins/cordova-plugin-camera/www/CameraConstants.js",
     "pluginId": "cordova-plugin-camera",
@@ -437,7 +429,6 @@ module.exports.metadata =
   "cordova-plugin-inappbrowser": "3.0.0",
   "cordova-plugin-file-transfer": "1.7.1",
   "cordova-plugin-media-capture": "3.0.2",
-  "cordova-clipboard": "1.2.0",
   "cordova-plugin-camera": "4.0.3",
   "cordova-plugin-qrscanner": "2.5.0"
 };
