@@ -8,7 +8,7 @@ import android.view.ViewGroup;
 import android.widget.Button;
 
 public class UserInfoAuthorizationDialogFragment extends DialogFragment {
-    static UserInfoAuthorizationDialogFragment newInstance() {
+    public static UserInfoAuthorizationDialogFragment newInstance() {
         UserInfoAuthorizationDialogFragment f = new UserInfoAuthorizationDialogFragment();
         Bundle args = new Bundle();
         f.setArguments(args);

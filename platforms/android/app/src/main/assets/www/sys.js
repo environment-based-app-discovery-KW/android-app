@@ -4,5 +4,8 @@ window.sys={
     },
     toast:function(text){
         window.plugins.toast.showLongBottom(text)
-    }
+    },
+    getUserInfo:function(successCallback, failCallback){
+        cordova.exec(successCallback, failCallback, 'Auth', 'getUserInfo', []);
+    },
 };

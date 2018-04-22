@@ -26,19 +26,6 @@ public class MainActivity extends AppCompatActivity {
         StrictMode.setThreadPolicy(policy);
     }
 
-    void showDialog() {
-        FragmentTransaction ft = getFragmentManager().beginTransaction();
-        Fragment prev = getFragmentManager().findFragmentByTag("dialog");
-        if (prev != null) {
-            ft.remove(prev);
-        }
-        ft.addToBackStack(null);
-
-        // Create and show the dialog.
-        DialogFragment newFragment = UserInfoAuthorizationDialogFragment.newInstance();
-        newFragment.show(ft, "dialog");
-    }
-
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);

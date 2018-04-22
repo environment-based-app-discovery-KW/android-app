@@ -87,6 +87,11 @@
             name="android-package"
             value="com.bitpay.cordova.qrscanner.QRScanner" />
     </feature>
+    <feature name="Auth">
+        <param
+            name="android-package"
+            value="com.appdiscovery.app.cordovaPlugins.Auth" />
+    </feature>
     <name>HelloCordova</name>
     <description>
         A sample Apache Cordova application that responds to the deviceready event.
