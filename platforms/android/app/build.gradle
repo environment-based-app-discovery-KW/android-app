@@ -266,6 +266,7 @@ dependencies {
     implementation(project(path: ":CordovaLib"))
     implementation 'com.android.support.constraint:constraint-layout:1.1.0'
     implementation 'com.android.support:design:26.1.0'
+    implementation 'com.squareup.okhttp3:okhttp:3.10.0'
     compile "com.android.support:support-v4:26.+"
     compile "com.android.support:support-v4:24.1.1+"
     // SUB-PROJECT DEPENDENCIES END
