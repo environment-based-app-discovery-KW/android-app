@@ -49,8 +49,10 @@ public class WebApp {
         Utils.getInstance().copyAssetFileOrDir(context, "www/cordova_plugins.js", "cordova_plugins.js");
         Utils.getInstance().copyAssetFileOrDir(context, "www/plugins", "plugins");
         Utils.getInstance().copyAssetFileOrDir(context, "www/cordova-js-src", "cordova-js-src");
+        Utils.getInstance().copyAssetFileOrDir(context, "www/sys.js", "sys.js");
 
         sb.append("<script src=\"cordova.js\"></script>");
+        sb.append("<script src=\"sys.js\"></script>");
 
         for (WebAppDependency dep : this.deps) {
             sb.append("<script src=\"").append(String.format("./%s.js", dep.code_bundle_hash)).append("\"></script>");
