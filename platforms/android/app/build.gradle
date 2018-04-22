@@ -270,6 +270,7 @@ dependencies {
     compile 'com.google.code.gson:gson:2.8.2'
     compile "com.android.support:support-v4:26.+"
     compile "com.android.support:support-v4:24.1.1+"
+    compile 'com.google.guava:guava:24.1-android'
     // SUB-PROJECT DEPENDENCIES END
 }
 

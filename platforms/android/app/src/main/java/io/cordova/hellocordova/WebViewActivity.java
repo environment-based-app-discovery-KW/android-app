@@ -20,13 +20,13 @@
 package io.cordova.hellocordova;
 
 import android.os.Bundle;
+import android.widget.Toast;
+
 import org.apache.cordova.*;
 
-public class WebViewActivity extends CordovaActivity
-{
+public class WebViewActivity extends CordovaActivity {
     @Override
-    public void onCreate(Bundle savedInstanceState)
-    {
+    public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
 
         // enable Cordova apps to be started in the background
@@ -35,7 +35,11 @@ public class WebViewActivity extends CordovaActivity
             moveTaskToBack(true);
         }
 
+        String fileName = extras.getString("fileName");
+
+        Toast.makeText(this, fileName, Toast.LENGTH_SHORT).show();
+
         // Set by <content src="index.html" /> in config.xml
-        loadUrl(launchUrl);
+        loadUrl("file://"+fileName);
     }
 }
