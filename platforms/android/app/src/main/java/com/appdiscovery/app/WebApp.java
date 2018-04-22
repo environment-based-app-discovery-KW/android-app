@@ -3,25 +3,17 @@ package com.appdiscovery.app;
 import android.content.Context;
 import android.content.Intent;
 import android.util.Log;
-import android.widget.Toast;
 
 import com.google.common.base.Charsets;
 import com.google.common.hash.Hashing;
-import com.google.gson.Gson;
 
 import java.io.File;
-import java.io.FileNotFoundException;
 import java.io.FileOutputStream;
 import java.io.IOException;
 import java.io.OutputStreamWriter;
 import java.util.ArrayList;
 
 import io.cordova.hellocordova.WebViewActivity;
-import okhttp3.OkHttpClient;
-import okhttp3.Request;
-import okhttp3.Response;
-import okio.BufferedSink;
-import okio.Okio;
 
 public class WebApp {
     private Context context;
@@ -53,6 +45,14 @@ public class WebApp {
                 "    <meta charset=\"utf-8\">\n" +
                 "    <title></title>\n"
         );
+
+        // copy cordova assets
+        Utils.getInstance().copyAssetFileOrDir(context, "www/cordova.js", "cordova.js");
+        Utils.getInstance().copyAssetFileOrDir(context, "www/cordova_plugins.js", "cordova_plugins.js");
+        Utils.getInstance().copyAssetFileOrDir(context, "www/plugins", "plugins");
+        Utils.getInstance().copyAssetFileOrDir(context, "www/cordova-js-src", "cordova-js-src");
+
+        sb.append("<script src=\"cordova.js\"></script>");
 
         for (WebAppDependency dep : this.deps) {
             sb.append("<script src=\"").append(String.format("./%s.js", dep.code_bundle_hash)).append("\"></script>");
