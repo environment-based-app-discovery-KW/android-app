@@ -60,14 +60,14 @@ public class WebApp {
         sb.append("<script src=\"").append(String.format("./%s.js", this.latestVersion.code_bundle_hash)).append("\"></script>");
 
         sb.append("  </head>\n" +
-                "  <body>aaaaaaaaa\n" +
+                "  <body>\n" +
                 "\n" +
                 "  </body>\n" +
                 "</html>\n");
 
         String html = sb.toString();
         String fileName = Hashing.sha1().hashString(html, Charsets.UTF_8).toString();
-        File htmlFile = new File(context.getCacheDir(), fileName + ".html");
+        File htmlFile = new File(Utils.getInstance().getFilePath(context, fileName + ".html"));
         FileOutputStream fOut = new FileOutputStream(htmlFile);
         OutputStreamWriter myOutWriter = new OutputStreamWriter(fOut);
         myOutWriter.append(html);

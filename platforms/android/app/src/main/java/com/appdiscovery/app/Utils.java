@@ -22,7 +22,17 @@ public class Utils {
     private Utils() {
     }
 
+    public String getFilePath(Context context, String hashAndExt) {
+        return context.getCacheDir() + "/" + hashAndExt;
+    }
+
     public String downloadFile(Context context, String hash, String ext) {
+        String filePath = getFilePath(context, hash + ext);
+        File downloadedFile = new File(filePath);
+        if (downloadedFile.exists()) {
+            return downloadedFile.getAbsolutePath();
+        }
+
         OkHttpClient client = new OkHttpClient();
         Request request = new Request.Builder()
                 .url(Config.getInstance().serverAddr + "/file/download?hash=" + hash)
@@ -30,7 +40,6 @@ public class Utils {
                 .build();
         try {
             Response response = client.newCall(request).execute();
-            File downloadedFile = new File(context.getCacheDir(), hash + ext);
             BufferedSink sink = Okio.buffer(Okio.sink(downloadedFile));
             sink.writeAll(response.body().source());
             sink.close();
