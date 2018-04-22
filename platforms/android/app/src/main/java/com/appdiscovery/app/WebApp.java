@@ -13,8 +13,6 @@ import java.io.IOException;
 import java.io.OutputStreamWriter;
 import java.util.ArrayList;
 
-import io.cordova.hellocordova.WebViewActivity;
-
 public class WebApp {
     private Context context;
     public Integer id;

@@ -17,7 +17,7 @@
        under the License.
  */
 
-package io.cordova.hellocordova;
+package com.appdiscovery.app;
 
 import android.os.Bundle;
 import android.widget.Toast;

@@ -1,59 +1,99 @@
 <?xml version='1.0' encoding='utf-8'?>
-<widget id="io.cordova.hellocordova" version="1.0.0" xmlns="http://www.w3.org/ns/widgets" xmlns:cdv="http://cordova.apache.org/ns/1.0">
+<widget
+    id="io.appdiscovery.androidapp"
+    version="1.0.0">
     <feature name="Whitelist">
-        <param name="android-package" value="org.apache.cordova.whitelist.WhitelistPlugin" />
-        <param name="onload" value="true" />
+        <param
+            name="android-package"
+            value="org.apache.cordova.whitelist.WhitelistPlugin" />
+        <param
+            name="onload"
+            value="true" />
     </feature>
     <feature name="Geolocation">
-        <param name="android-package" value="org.apache.cordova.geolocation.Geolocation" />
+        <param
+            name="android-package"
+            value="org.apache.cordova.geolocation.Geolocation" />
     </feature>
     <feature name="Toast">
-        <param name="android-package" value="nl.xservices.plugins.Toast" />
+        <param
+            name="android-package"
+            value="nl.xservices.plugins.Toast" />
     </feature>
     <feature name="NetworkStatus">
-        <param name="android-package" value="org.apache.cordova.networkinformation.NetworkManager" />
+        <param
+            name="android-package"
+            value="org.apache.cordova.networkinformation.NetworkManager" />
     </feature>
     <feature name="Device">
-        <param name="android-package" value="org.apache.cordova.device.Device" />
+        <param
+            name="android-package"
+            value="org.apache.cordova.device.Device" />
     </feature>
     <feature name="Badge">
-        <param name="android-package" value="de.appplant.cordova.plugin.badge.Badge" />
+        <param
+            name="android-package"
+            value="de.appplant.cordova.plugin.badge.Badge" />
     </feature>
     <feature name="LocalNotification">
-        <param name="android-package" value="de.appplant.cordova.plugin.localnotification.LocalNotification" />
+        <param
+            name="android-package"
+            value="de.appplant.cordova.plugin.localnotification.LocalNotification" />
     </feature>
     <feature name="File">
-        <param name="android-package" value="org.apache.cordova.file.FileUtils" />
-        <param name="onload" value="true" />
+        <param
+            name="android-package"
+            value="org.apache.cordova.file.FileUtils" />
+        <param
+            name="onload"
+            value="true" />
     </feature>
     <allow-navigation href="cdvfile:*" />
     <feature name="Media">
-        <param name="android-package" value="org.apache.cordova.media.AudioHandler" />
+        <param
+            name="android-package"
+            value="org.apache.cordova.media.AudioHandler" />
     </feature>
     <feature name="Keyboard">
-        <param name="android-package" value="io.ionic.keyboard.IonicKeyboard" />
-        <param name="onload" value="true" />
+        <param
+            name="android-package"
+            value="io.ionic.keyboard.IonicKeyboard" />
+        <param
+            name="onload"
+            value="true" />
     </feature>
     <feature name="InAppBrowser">
-        <param name="android-package" value="org.apache.cordova.inappbrowser.InAppBrowser" />
+        <param
+            name="android-package"
+            value="org.apache.cordova.inappbrowser.InAppBrowser" />
     </feature>
     <feature name="FileTransfer">
-        <param name="android-package" value="org.apache.cordova.filetransfer.FileTransfer" />
+        <param
+            name="android-package"
+            value="org.apache.cordova.filetransfer.FileTransfer" />
     </feature>
     <feature name="Capture">
-        <param name="android-package" value="org.apache.cordova.mediacapture.Capture" />
+        <param
+            name="android-package"
+            value="org.apache.cordova.mediacapture.Capture" />
     </feature>
     <feature name="Camera">
-        <param name="android-package" value="org.apache.cordova.camera.CameraLauncher" />
+        <param
+            name="android-package"
+            value="org.apache.cordova.camera.CameraLauncher" />
     </feature>
     <feature name="QRScanner">
-        <param name="android-package" value="com.bitpay.cordova.qrscanner.QRScanner" />
+        <param
+            name="android-package"
+            value="com.bitpay.cordova.qrscanner.QRScanner" />
     </feature>
     <name>HelloCordova</name>
     <description>
         A sample Apache Cordova application that responds to the deviceready event.
     </description>
-    <author email="dev@cordova.apache.org" href="http://cordova.io">
+    <author
+        email="dev@cordova.apache.org"
+        href="http://cordova.io">
         Apache Cordova Team
     </author>
     <content src="index.html" />
@@ -65,5 +105,7 @@
     <allow-intent href="mailto:*" />
     <allow-intent href="geo:*" />
     <allow-intent href="market:*" />
-    <preference name="loglevel" value="DEBUG" />
+    <preference
+        name="loglevel"
+        value="DEBUG" />
 </widget>
