@@ -8,10 +8,12 @@ import android.view.ViewGroup;
 import android.widget.TextView;
 
 class AppListAdapter extends RecyclerView.Adapter<AppListAdapter.ViewHolder> {
+    private final View.OnClickListener mOnClickListener;
     private WebApp[] webApps;
 
-    public AppListAdapter(WebApp[] webApps) {
+    public AppListAdapter(WebApp[] webApps, View.OnClickListener onClickListener) {
         this.webApps = webApps;
+        this.mOnClickListener = onClickListener;
     }
 
     public static class ViewHolder extends RecyclerView.ViewHolder {
@@ -28,7 +30,7 @@ class AppListAdapter extends RecyclerView.Adapter<AppListAdapter.ViewHolder> {
     public ViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
         View v = (View) LayoutInflater.from(parent.getContext())
                 .inflate(R.layout.my_text_view, parent, false);
-
+        v.setOnClickListener(mOnClickListener);
         return new ViewHolder(v);
     }
 
