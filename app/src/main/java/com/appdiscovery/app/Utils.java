@@ -39,7 +39,7 @@ public class Utils {
 
         OkHttpClient client = new OkHttpClient();
         Request request = new Request.Builder()
-                .url(Config.getInstance().serverAddr + "/file/download?hash=" + hash)
+                .url(Config.getInstance().repoServerAddr + "/file/download?hash=" + hash)
                 .get()
                 .build();
         try {

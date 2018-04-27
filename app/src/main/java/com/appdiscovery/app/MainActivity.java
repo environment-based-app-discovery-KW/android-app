@@ -1,15 +1,10 @@
 package com.appdiscovery.app;
 
-import android.app.DialogFragment;
-import android.app.Fragment;
-import android.app.FragmentTransaction;
 import android.os.Bundle;
 import android.os.StrictMode;
 import android.support.design.widget.FloatingActionButton;
 import android.support.v7.app.AppCompatActivity;
 import android.view.View;
-import android.widget.Button;
-import android.widget.TextView;
 
 import com.google.gson.Gson;
 
@@ -37,7 +32,7 @@ public class MainActivity extends AppCompatActivity {
             public void onClick(View view) {
                 OkHttpClient client = new OkHttpClient();
                 Request request = new Request.Builder()
-                        .url(Config.getInstance().serverAddr + "/app/download?id=1")
+                        .url(Config.getInstance().repoServerAddr + "/app/download?id=1")
                         .get()
                         .build();
 

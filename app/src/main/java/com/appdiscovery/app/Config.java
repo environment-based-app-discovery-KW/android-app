@@ -7,7 +7,8 @@ public class Config {
         return ourInstance;
     }
 
-    public String serverAddr = "http://192.168.3.52:888";
+    public String repoServerAddr = "http://10.222.160.194:888";
+    public String centralServerAddr = "http://10.222.160.194:889";
 
     private Config() {
     }
