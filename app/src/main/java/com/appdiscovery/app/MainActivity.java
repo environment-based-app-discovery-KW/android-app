@@ -1,7 +1,13 @@
 package com.appdiscovery.app;
 
+import android.annotation.SuppressLint;
+import android.content.Context;
+import android.location.Location;
+import android.location.LocationManager;
 import android.os.Bundle;
 import android.os.StrictMode;
+import android.support.annotation.NonNull;
+import android.support.v4.app.ActivityCompat;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
@@ -11,9 +17,7 @@ import com.appdiscovery.app.services.DiscoverApp;
 import com.appdiscovery.app.services.LoadApp;
 import com.appdiscovery.app.services.LocationWatcher;
 
-import java.io.IOException;
-
-public class MainActivity extends AppCompatActivity {
+public class MainActivity extends AppCompatActivity implements ActivityCompat.OnRequestPermissionsResultCallback {
     private RecyclerView mRecyclerView;
     private RecyclerView.Adapter mAdapter;
     private RecyclerView.LayoutManager mLayoutManager;
@@ -34,7 +38,9 @@ public class MainActivity extends AppCompatActivity {
         WebApp.setContext(this);
     }
 
-    private LocationWatcher mLocationWatcher = new LocationWatcher(this, location -> {
+    private LocationWatcher mLocationWatcher = new LocationWatcher(this, this::discoverAppByLocation);
+
+    private void discoverAppByLocation(Location location) {
         DiscoverApp.byLocation(location, webapps -> {
             for (WebApp webapp : webapps) {
                 webapp.preload();
@@ -45,11 +51,22 @@ public class MainActivity extends AppCompatActivity {
             mLayoutManager = new LinearLayoutManager(MainActivity.this);
             mRecyclerView.setLayoutManager(mLayoutManager);
         });
-    });
+    }
 
     private View.OnClickListener onListItemClick = (view -> {
         int itemPosition = mRecyclerView.getChildLayoutPosition(view);
         WebApp webapp = webapps[itemPosition];
         LoadApp.show(this, webapp.id);
     });
+
+    @SuppressLint("MissingPermission")
+    @Override
+    public void onRequestPermissionsResult(int requestCode, @NonNull String[] permissions, @NonNull int[] grantResults) {
+        // 初次通过地理位置权限请求
+        if (requestCode == LocationWatcher.REQUEST_PERMISSION_LOCATION_STATE) {
+            LocationManager locationManager = (LocationManager) this.getSystemService(Context.LOCATION_SERVICE);
+            assert locationManager != null;
+            discoverAppByLocation(locationManager.getLastKnownLocation(LocationManager.GPS_PROVIDER));
+        }
+    }
 }

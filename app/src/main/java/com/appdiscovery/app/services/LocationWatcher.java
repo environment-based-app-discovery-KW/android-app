@@ -14,7 +14,7 @@ import android.support.v4.app.ActivityCompat;
 import java.util.function.Consumer;
 
 public class LocationWatcher {
-    private static final int REQUEST_PERMISSION_LOCATION_STATE = 123;
+    public static final int REQUEST_PERMISSION_LOCATION_STATE = 123;
     private final Consumer<Location> onLocationChangeCallback;
     private final Context context;
 
