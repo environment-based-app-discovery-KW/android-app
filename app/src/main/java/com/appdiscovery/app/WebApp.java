@@ -2,6 +2,7 @@ package com.appdiscovery.app;
 
 import android.content.Context;
 import android.content.Intent;
+import android.widget.Toast;
 
 import com.appdiscovery.app.services.AppBuilder;
 
@@ -53,6 +54,7 @@ public class WebApp {
             myIntent.putExtra("fileName", file.getAbsolutePath());
             context.startActivity(myIntent);
         } else {
+            Toast.makeText(context, "APP正在传输中，将很快为您打开", Toast.LENGTH_LONG).show();
             mapAppIdToRunOnFinish.put(this.id.toString(), true);
         }
     }
