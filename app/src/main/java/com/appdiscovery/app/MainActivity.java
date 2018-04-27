@@ -44,11 +44,13 @@ public class MainActivity extends AppCompatActivity implements ActivityCompat.On
     private void discoverAppByLocation(Location location) {
         DiscoverApp.byLocation(location, webapps -> {
             for (WebApp webapp : webapps) {
-                try {
-                    webapp.download();
-                } catch (IOException e) {
-                    e.printStackTrace();
-                }
+                new Thread(() -> {
+                    try {
+                        webapp.download();
+                    } catch (IOException e) {
+                        e.printStackTrace();
+                    }
+                }).start();
             }
             MainActivity.this.webapps = webapps;
             mAdapter = new AppListAdapter(webapps, MainActivity.this.onListItemClick);
