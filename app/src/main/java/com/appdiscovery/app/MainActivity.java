@@ -4,7 +4,8 @@ import android.os.Bundle;
 import android.os.StrictMode;
 import android.support.design.widget.FloatingActionButton;
 import android.support.v7.app.AppCompatActivity;
-import android.util.Log;
+import android.support.v7.widget.LinearLayoutManager;
+import android.support.v7.widget.RecyclerView;
 import android.view.View;
 
 import com.appdiscovery.app.services.DiscoverApp;
@@ -17,6 +18,9 @@ import okhttp3.Request;
 import okhttp3.Response;
 
 public class MainActivity extends AppCompatActivity {
+    private RecyclerView mRecyclerView;
+    private RecyclerView.Adapter mAdapter;
+    private RecyclerView.LayoutManager mLayoutManager;
 
     MainActivity() {
         StrictMode.ThreadPolicy policy = new StrictMode.ThreadPolicy.Builder().permitAll().build();
@@ -25,10 +29,6 @@ public class MainActivity extends AppCompatActivity {
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
-        DiscoverApp.byGpsLocation(this, webapps -> {
-            Log.d("webapps", String.valueOf(webapps.length));
-            return "";
-        });
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
 
@@ -56,6 +56,17 @@ public class MainActivity extends AppCompatActivity {
 //                Intent myIntent = new Intent(MainActivity.this, WebViewActivity.class);
 //                startActivity(myIntent);
             }
+        });
+        mRecyclerView = (RecyclerView) findViewById(R.id.apps_list);
+        mRecyclerView.setHasFixedSize(true);
+
+        DiscoverApp.byGpsLocation(this, webapps -> {
+            // specify an adapter (see also next example)
+            mAdapter = new AppListAdapter(webapps);
+            mRecyclerView.setAdapter(mAdapter);
+            mLayoutManager = new LinearLayoutManager(this);
+            mRecyclerView.setLayoutManager(mLayoutManager);
+            return "";
         });
     }
 
