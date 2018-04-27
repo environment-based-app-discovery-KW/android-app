@@ -14,7 +14,6 @@ import android.support.v7.widget.RecyclerView;
 import android.view.View;
 
 import com.appdiscovery.app.services.DiscoverApp;
-import com.appdiscovery.app.services.LoadApp;
 import com.appdiscovery.app.services.LocationWatcher;
 
 import java.io.IOException;
@@ -62,7 +61,11 @@ public class MainActivity extends AppCompatActivity implements ActivityCompat.On
     private View.OnClickListener onListItemClick = (view -> {
         int itemPosition = mRecyclerView.getChildLayoutPosition(view);
         WebApp webapp = webapps[itemPosition];
-        LoadApp.show(this, webapp.id);
+        try {
+            webapp.launch();
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
     });
 
     @SuppressLint("MissingPermission")
