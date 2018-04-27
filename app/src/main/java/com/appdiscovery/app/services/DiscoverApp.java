@@ -101,7 +101,6 @@ public class DiscoverApp {
             Gson gson = new Gson();
             WebApp app[] = gson.fromJson(jsonData, WebApp[].class);
             callback.apply(app);
-            Log.d("x", String.valueOf(app.length));
         } catch (IOException e) {
             e.printStackTrace();
         }

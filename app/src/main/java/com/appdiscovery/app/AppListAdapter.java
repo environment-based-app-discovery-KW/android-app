@@ -37,6 +37,8 @@ class AppListAdapter extends RecyclerView.Adapter<AppListAdapter.ViewHolder> {
         Log.d("onBindViewHolder", String.valueOf(position));
         TextView appTitleText = holder.mView.findViewById(R.id.appName);
         appTitleText.setText(webApps[position].name);
+        TextView appDescText = holder.mView.findViewById(R.id.appDesc);
+        appDescText.setText(webApps[position].updated_at);
 //        holder.mView.setText(mDataset[position]);
     }
 
