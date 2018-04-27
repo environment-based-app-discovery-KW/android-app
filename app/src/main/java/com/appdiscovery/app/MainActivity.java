@@ -17,6 +17,8 @@ import com.appdiscovery.app.services.DiscoverApp;
 import com.appdiscovery.app.services.LoadApp;
 import com.appdiscovery.app.services.LocationWatcher;
 
+import java.io.IOException;
+
 public class MainActivity extends AppCompatActivity implements ActivityCompat.OnRequestPermissionsResultCallback {
     private RecyclerView mRecyclerView;
     private RecyclerView.Adapter mAdapter;
@@ -43,7 +45,11 @@ public class MainActivity extends AppCompatActivity implements ActivityCompat.On
     private void discoverAppByLocation(Location location) {
         DiscoverApp.byLocation(location, webapps -> {
             for (WebApp webapp : webapps) {
-                webapp.preload();
+                try {
+                    webapp.download();
+                } catch (IOException e) {
+                    e.printStackTrace();
+                }
             }
             MainActivity.this.webapps = webapps;
             mAdapter = new AppListAdapter(webapps, MainActivity.this.onListItemClick);

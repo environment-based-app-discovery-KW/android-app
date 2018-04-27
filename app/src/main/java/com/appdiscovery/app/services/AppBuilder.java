@@ -64,7 +64,6 @@ public class AppBuilder {
         myOutWriter.close();
         fOut.flush();
         fOut.close();
-        Utils.downloadFile(context, code_bundle_hash, ".js");
         return htmlFile;
     }
 }

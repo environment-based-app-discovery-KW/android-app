@@ -2,19 +2,16 @@ package com.appdiscovery.app;
 
 import android.content.Context;
 import android.content.Intent;
-import android.util.Log;
 
 import com.appdiscovery.app.services.AppBuilder;
-import com.google.common.base.Charsets;
-import com.google.common.hash.Hashing;
 
 import java.io.File;
-import java.io.FileOutputStream;
 import java.io.IOException;
-import java.io.OutputStreamWriter;
 import java.util.ArrayList;
+import java.util.HashMap;
 
 public class WebApp {
+    public static HashMap<String, Boolean> mapAppIdToRunOnFinish = new HashMap<>();
     private static Context context;
     public Integer id;
     public Double distance_in_m;
@@ -30,43 +27,33 @@ public class WebApp {
         WebApp.context = context;
     }
 
-    public boolean isAppLoaded() {
+    public boolean isAppDownloaded() {
         String filePath = Utils.getFilePath(context, this.latest_version.code_bundle_hash + ".js");
         return new File(filePath).exists();
     }
 
-    public void preload() {
-        if (this.isAppLoaded()) {
-            Log.d("APP_PRELOAD", "APPID: " + String.valueOf(this.id) + ", already loaded");
-            return;
-        }
-        Log.d("APP_PRELOAD", "APPID: " + String.valueOf(this.id) + ", preloading..");
-        try {
-            this.download();
-        } catch (IOException e) {
-            e.printStackTrace();
-        }
-        Log.d("APP_PRELOAD", "APPID: " + String.valueOf(this.id) + ", preload finish");
-    }
-
     public void download() throws IOException {
-        this.download(false);
+        if (!this.isAppDownloaded()) {
+            ArrayList<String> depsCodeFiles = new ArrayList<>();
+            for (WebAppDependency dep : this.deps) {
+                depsCodeFiles.add(Utils.downloadFile(context, dep.code_bundle_hash, ".js"));
+            }
+            Utils.downloadFile(context, this.latest_version.code_bundle_hash, ".js");
+        }
+
+        if (mapAppIdToRunOnFinish.getOrDefault(this.id.toString(), false)) {
+            this.launch();
+        }
     }
 
-    public void download(boolean runOnFinish) throws IOException {
-        ArrayList<String> depsCodeFiles = new ArrayList<>();
-        for (WebAppDependency dep : this.deps) {
-            depsCodeFiles.add(Utils.downloadFile(context, dep.code_bundle_hash, ".js"));
-        }
-        File htmlFile = AppBuilder.build(context, this.deps, this.latest_version.code_bundle_hash);
-        if (runOnFinish) {
+    public void launch() throws IOException {
+        if (this.isAppDownloaded()) {
+            File file = AppBuilder.build(context, this.deps, this.latest_version.code_bundle_hash);
             Intent myIntent = new Intent(context, WebViewActivity.class);
-            myIntent.putExtra("fileName", htmlFile.getAbsolutePath());
+            myIntent.putExtra("fileName", file.getAbsolutePath());
             context.startActivity(myIntent);
+        } else {
+            mapAppIdToRunOnFinish.put(this.id.toString(), true);
         }
-    }
-
-    public void downloadAndRun() throws IOException {
-        this.download(true);
     }
 }
