@@ -6,6 +6,7 @@ import android.support.design.widget.FloatingActionButton;
 import android.support.v7.app.AppCompatActivity;
 import android.view.View;
 
+import com.appdiscovery.app.services.DiscoverApp;
 import com.google.gson.Gson;
 
 import java.io.IOException;
@@ -23,6 +24,7 @@ public class MainActivity extends AppCompatActivity {
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
+        DiscoverApp.byGpsLocation(this);
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
 
