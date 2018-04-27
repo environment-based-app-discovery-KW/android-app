@@ -29,8 +29,12 @@ public class WebApp {
         this.context = context;
     }
 
-    public void downloadAndRun() throws IOException {
-        //TODO: cache
+    public boolean isAppLoaded() {
+        String filePath = Utils.getInstance().getFilePath(context, this.latestVersion.code_bundle_hash + ".js");
+        return new File(filePath).exists();
+    }
+
+    public void download(boolean runOnFinish) throws IOException {
         String appCodeFile = Utils.getInstance().downloadFile(this.context, this.latestVersion.code_bundle_hash, ".js");
         ArrayList<String> depsCodeFiles = new ArrayList<>();
         for (WebAppDependency dep : this.deps) {
@@ -76,9 +80,14 @@ public class WebApp {
         fOut.flush();
         fOut.close();
 
-        Log.d("WebAppBuild", htmlFile.getAbsolutePath());
-        Intent myIntent = new Intent(context, WebViewActivity.class);
-        myIntent.putExtra("fileName", htmlFile.getAbsolutePath());
-        context.startActivity(myIntent);
+        if (runOnFinish) {
+            Intent myIntent = new Intent(context, WebViewActivity.class);
+            myIntent.putExtra("fileName", htmlFile.getAbsolutePath());
+            context.startActivity(myIntent);
+        }
+    }
+
+    public void downloadAndRun() throws IOException {
+        this.download(true);
     }
 }
