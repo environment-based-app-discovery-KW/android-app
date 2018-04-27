@@ -13,6 +13,23 @@ import java.io.IOException;
 import java.io.OutputStreamWriter;
 
 public class AppBuilder {
+    final static String copyFinishedFlag = ".asset_copy_finished";
+
+    /**
+     * 把载入时需要用到的assets拷到web目录
+     */
+    private static void copyAssets(Context context) throws IOException {
+        if (new File(Utils.getFilePath(context, copyFinishedFlag)).exists()) {
+            return;
+        }
+        Utils.copyAssetFileOrDir(context, "www/cordova.js", "cordova.js");
+        Utils.copyAssetFileOrDir(context, "www/cordova_plugins.js", "cordova_plugins.js");
+        Utils.copyAssetFileOrDir(context, "www/plugins", "plugins");
+        Utils.copyAssetFileOrDir(context, "www/cordova-js-src", "cordova-js-src");
+        Utils.copyAssetFileOrDir(context, "www/sys.js", "sys.js");
+        new File(Utils.getFilePath(context, copyFinishedFlag)).createNewFile();
+    }
+
     public static File build(Context context, WebAppDependency[] deps, String code_bundle_hash) throws IOException {
         StringBuilder sb = new StringBuilder();
         sb.append("<!DOCTYPE html>\n" +
@@ -22,12 +39,7 @@ public class AppBuilder {
                 "    <title></title>\n"
         );
 
-        // copy cordova assets
-        Utils.copyAssetFileOrDir(context, "www/cordova.js", "cordova.js");
-        Utils.copyAssetFileOrDir(context, "www/cordova_plugins.js", "cordova_plugins.js");
-        Utils.copyAssetFileOrDir(context, "www/plugins", "plugins");
-        Utils.copyAssetFileOrDir(context, "www/cordova-js-src", "cordova-js-src");
-        Utils.copyAssetFileOrDir(context, "www/sys.js", "sys.js");
+        AppBuilder.copyAssets(context);
 
         sb.append("<script src=\"cordova.js\"></script>");
         sb.append("<script src=\"sys.js\"></script>");
