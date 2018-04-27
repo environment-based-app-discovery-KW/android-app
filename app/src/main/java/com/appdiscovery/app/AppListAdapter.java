@@ -1,5 +1,6 @@
 package com.appdiscovery.app;
 
+import android.annotation.SuppressLint;
 import android.support.v7.widget.RecyclerView;
 import android.util.Log;
 import android.view.LayoutInflater;
@@ -34,13 +35,14 @@ class AppListAdapter extends RecyclerView.Adapter<AppListAdapter.ViewHolder> {
         return new ViewHolder(v);
     }
 
+    @SuppressLint({"SetTextI18n", "DefaultLocale"})
     @Override
     public void onBindViewHolder(ViewHolder holder, int position) {
         Log.d("onBindViewHolder", String.valueOf(position));
         TextView appTitleText = holder.mView.findViewById(R.id.appName);
         appTitleText.setText(webApps[position].name);
         TextView appDescText = holder.mView.findViewById(R.id.appDesc);
-        appDescText.setText(webApps[position].updated_at);
+        appDescText.setText(String.format("距离您 %.2f m", webApps[position].distance_in_m));
 //        holder.mView.setText(mDataset[position]);
     }
 

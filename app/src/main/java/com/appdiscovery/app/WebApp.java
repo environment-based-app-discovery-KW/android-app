@@ -16,6 +16,7 @@ import java.util.ArrayList;
 public class WebApp {
     private Context context;
     public Integer id;
+    public Double distance_in_m;
     public String name;
     public String description;
     public String developer_id;
