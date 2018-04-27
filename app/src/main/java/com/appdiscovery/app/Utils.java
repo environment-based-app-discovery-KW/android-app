@@ -17,20 +17,14 @@ import okio.BufferedSink;
 import okio.Okio;
 
 public class Utils {
-    private static final Utils ourInstance = new Utils();
-
-    public static Utils getInstance() {
-        return ourInstance;
-    }
-
     private Utils() {
     }
 
-    public String getFilePath(Context context, String hashAndExt) {
+    public static String getFilePath(Context context, String hashAndExt) {
         return context.getCacheDir() + "/" + hashAndExt;
     }
 
-    public String downloadFile(Context context, String hash, String ext) {
+    public static String downloadFile(Context context, String hash, String ext) {
         String filePath = getFilePath(context, hash + ext);
         File downloadedFile = new File(filePath);
         if (downloadedFile.exists()) {
@@ -54,19 +48,19 @@ public class Utils {
         return null;
     }
 
-    public void copyAssetFileOrDir(Context context, String from, String to) throws IOException {
+    public static void copyAssetFileOrDir(Context context, String from, String to) throws IOException {
         AssetManager assetManager = context.getAssets();
         String assets[] = null;
         assets = assetManager.list(from);
         if (assets.length == 0) {
             InputStream assetInputStream = assetManager.open(from);
-            FileOutputStream outStream = new FileOutputStream(Utils.getInstance().getFilePath(context, to));
+            FileOutputStream outStream = new FileOutputStream(Utils.getFilePath(context, to));
             ByteStreams.copy(assetInputStream, outStream);
             outStream.flush();
             outStream.close();
             assetInputStream.close();
         } else {
-            String fullPath = Utils.getInstance().getFilePath(context, to);
+            String fullPath = Utils.getFilePath(context, to);
             File dir = new File(fullPath);
             if (!dir.exists())
                 dir.mkdir();
@@ -74,7 +68,5 @@ public class Utils {
                 copyAssetFileOrDir(context, from + "/" + assets[i], to + "/" + assets[i]);
             }
         }
-
     }
-
 }

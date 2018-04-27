@@ -30,15 +30,15 @@ public class WebApp {
     }
 
     public boolean isAppLoaded() {
-        String filePath = Utils.getInstance().getFilePath(context, this.latestVersion.code_bundle_hash + ".js");
+        String filePath = Utils.getFilePath(context, this.latestVersion.code_bundle_hash + ".js");
         return new File(filePath).exists();
     }
 
     public void download(boolean runOnFinish) throws IOException {
-        String appCodeFile = Utils.getInstance().downloadFile(this.context, this.latestVersion.code_bundle_hash, ".js");
+        String appCodeFile = Utils.downloadFile(this.context, this.latestVersion.code_bundle_hash, ".js");
         ArrayList<String> depsCodeFiles = new ArrayList<>();
         for (WebAppDependency dep : this.deps) {
-            depsCodeFiles.add(Utils.getInstance().downloadFile(this.context, dep.code_bundle_hash, ".js"));
+            depsCodeFiles.add(Utils.downloadFile(this.context, dep.code_bundle_hash, ".js"));
         }
 
         StringBuilder sb = new StringBuilder();
@@ -50,11 +50,11 @@ public class WebApp {
         );
 
         // copy cordova assets
-        Utils.getInstance().copyAssetFileOrDir(context, "www/cordova.js", "cordova.js");
-        Utils.getInstance().copyAssetFileOrDir(context, "www/cordova_plugins.js", "cordova_plugins.js");
-        Utils.getInstance().copyAssetFileOrDir(context, "www/plugins", "plugins");
-        Utils.getInstance().copyAssetFileOrDir(context, "www/cordova-js-src", "cordova-js-src");
-        Utils.getInstance().copyAssetFileOrDir(context, "www/sys.js", "sys.js");
+        Utils.copyAssetFileOrDir(context, "www/cordova.js", "cordova.js");
+        Utils.copyAssetFileOrDir(context, "www/cordova_plugins.js", "cordova_plugins.js");
+        Utils.copyAssetFileOrDir(context, "www/plugins", "plugins");
+        Utils.copyAssetFileOrDir(context, "www/cordova-js-src", "cordova-js-src");
+        Utils.copyAssetFileOrDir(context, "www/sys.js", "sys.js");
 
         sb.append("<script src=\"cordova.js\"></script>");
         sb.append("<script src=\"sys.js\"></script>");
@@ -72,7 +72,7 @@ public class WebApp {
 
         String html = sb.toString();
         String fileName = Hashing.sha1().hashString(html, Charsets.UTF_8).toString();
-        File htmlFile = new File(Utils.getInstance().getFilePath(context, fileName + ".html"));
+        File htmlFile = new File(Utils.getFilePath(context, fileName + ".html"));
         FileOutputStream fOut = new FileOutputStream(htmlFile);
         OutputStreamWriter myOutWriter = new OutputStreamWriter(fOut);
         myOutWriter.append(html);
