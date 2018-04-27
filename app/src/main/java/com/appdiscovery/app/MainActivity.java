@@ -16,6 +16,7 @@ import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.view.View;
 
+import com.appdiscovery.app.services.DiscoverApp;
 import com.appdiscovery.app.services.LoadApp;
 import com.google.gson.Gson;
 
@@ -68,30 +69,19 @@ public class MainActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
-        mRecyclerView = (RecyclerView) findViewById(R.id.apps_list);
+        mRecyclerView = findViewById(R.id.apps_list);
         mRecyclerView.setHasFixedSize(true);
-
 
         LocationListener locationListener = new LocationListener() {
             @Override
             public void onLocationChanged(Location location) {
-                OkHttpClient client = new OkHttpClient();
-                Request request = new Request.Builder()
-                        .url(Config.getInstance().repoServerAddr + "/app/discover?lat=" + location.getLatitude() + "&lng=" + location.getLongitude())
-                        .get()
-                        .build();
-                try {
-                    Response response = client.newCall(request).execute();
-                    String jsonData = response.body().string();
-                    Gson gson = new Gson();
-                    MainActivity.this.webapps = gson.fromJson(jsonData, WebApp[].class);
+                DiscoverApp.byLocation(location, webapps -> {
+                    MainActivity.this.webapps = webapps;
                     mAdapter = new AppListAdapter(webapps, onListItemClick);
                     mRecyclerView.setAdapter(mAdapter);
                     mLayoutManager = new LinearLayoutManager(MainActivity.this);
                     mRecyclerView.setLayoutManager(mLayoutManager);
-                } catch (IOException e) {
-                    e.printStackTrace();
-                }
+                });
             }
 
             @Override
