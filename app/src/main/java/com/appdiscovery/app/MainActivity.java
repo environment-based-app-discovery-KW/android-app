@@ -11,6 +11,8 @@ import com.appdiscovery.app.services.DiscoverApp;
 import com.appdiscovery.app.services.LoadApp;
 import com.appdiscovery.app.services.LocationWatcher;
 
+import java.io.IOException;
+
 public class MainActivity extends AppCompatActivity {
     private RecyclerView mRecyclerView;
     private RecyclerView.Adapter mAdapter;
@@ -29,10 +31,14 @@ public class MainActivity extends AppCompatActivity {
         mRecyclerView = findViewById(R.id.apps_list);
         mRecyclerView.setHasFixedSize(true);
         mLocationWatcher.start();
+        WebApp.setContext(this);
     }
 
     private LocationWatcher mLocationWatcher = new LocationWatcher(this, location -> {
         DiscoverApp.byLocation(location, webapps -> {
+            for (WebApp webapp : webapps) {
+                webapp.preload();
+            }
             MainActivity.this.webapps = webapps;
             mAdapter = new AppListAdapter(webapps, MainActivity.this.onListItemClick);
             mRecyclerView.setAdapter(mAdapter);

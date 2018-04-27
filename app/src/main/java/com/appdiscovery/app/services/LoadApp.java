@@ -26,7 +26,6 @@ public class LoadApp {
             String jsonData = response.body().string();
             Gson gson = new Gson();
             WebApp app = gson.fromJson(jsonData, WebApp.class);
-            app.setContext(context);
             app.downloadAndRun();
         } catch (IOException e) {
             e.printStackTrace();
