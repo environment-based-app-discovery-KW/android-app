@@ -1,0 +1,58 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:orientation="vertical" android:layout_width="match_parent"
+    android:layout_height="match_parent">
+
+    <TextView
+        android:id="@+id/userProfileNameLabel"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="姓名" />
+
+
+    <EditText
+        android:id="@+id/userProfileNameInput"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:ems="10"
+        android:hint="请输入姓名"
+        android:inputType="textPersonName" />
+
+
+    <TextView
+        android:id="@+id/userProfileEmailLabel"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="邮箱" />
+
+
+    <EditText
+        android:id="@+id/userProfileEmailInput"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:ems="10"
+        android:hint="请输入邮箱"
+        android:inputType="textEmailAddress" />
+
+    <TextView
+        android:id="@+id/userProfileMobileLabel"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="手机号" />
+
+
+    <EditText
+        android:id="@+id/userProfileMobileInput"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:ems="10"
+        android:hint="手机号"
+        android:inputType="textNoSuggestions" />
+
+    <Button
+        android:id="@+id/userProfileFinishButton"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="完成" />
+
+</LinearLayout>
