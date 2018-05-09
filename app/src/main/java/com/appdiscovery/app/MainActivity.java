@@ -27,6 +27,7 @@ public class MainActivity extends AppCompatActivity implements ActivityCompat.On
     private RecyclerView.LayoutManager mLayoutManager;
     private FloatingActionButton mEditUserProfileBtn;
     private WebApp[] webapps;
+    public static String activeAppName = "";
 
     MainActivity() {
         StrictMode.ThreadPolicy policy = new StrictMode.ThreadPolicy.Builder().permitAll().build();
@@ -74,6 +75,7 @@ public class MainActivity extends AppCompatActivity implements ActivityCompat.On
         int itemPosition = mRecyclerView.getChildLayoutPosition(view);
         WebApp webapp = webapps[itemPosition];
         try {
+            activeAppName = webapp.name;
             webapp.launch();
         } catch (IOException e) {
             e.printStackTrace();

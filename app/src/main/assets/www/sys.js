@@ -17,4 +17,10 @@ window.sys={
             cordova.exec(function(data){ successCallback(JSON.parse(data)) }, failCallback, 'Auth', 'getUserInfo', fields);
         });
     },
+    getUserIdentity:function(successCallback){
+        // fields: [ "name", "mobile", "email" ]
+        deviceReadyPromise.then(function(){
+            cordova.exec(function(data){ successCallback(JSON.parse(data)) }, function() {}, 'Auth', 'getUserIdentity');
+        });
+    },
 };

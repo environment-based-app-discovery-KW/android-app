@@ -12,8 +12,10 @@ import android.widget.Button;
 import android.widget.Toast;
 
 import com.appdiscovery.app.EditUserProfileActivity;
+import com.appdiscovery.app.MainActivity;
 import com.appdiscovery.app.R;
 import com.appdiscovery.app.UserInfoAuthorizationDialogFragment;
+import com.appdiscovery.app.services.DigitalSignature;
 
 import org.apache.cordova.CallbackContext;
 import org.apache.cordova.CordovaInterface;
@@ -78,6 +80,28 @@ public class Auth extends CordovaPlugin {
         newFragment.show(ft, "dialog");
     }
 
+    void getUserIdentity(String[] args, final CallbackContext callbackContext) {
+        Activity cordovaActivity = cordova.getActivity();
+
+        String privateKey = DigitalSignature.getPrivateKey(cordovaActivity);
+        String publicKey = DigitalSignature.getPublicKey(cordovaActivity);
+
+        String signedContent = "APP:" + MainActivity.activeAppName + ":" + System.currentTimeMillis();
+        String signature = DigitalSignature.sign(signedContent, privateKey);
+
+        try {
+            JSONObject userIdentity = new JSONObject();
+            userIdentity.put("publicKey", publicKey);
+            userIdentity.put("signature", signature);
+            userIdentity.put("signedContent", signedContent);
+            PluginResult result = new PluginResult(PluginResult.Status.OK, userIdentity.toString());
+            result.setKeepCallback(false);
+            callbackContext.sendPluginResult(result);
+        } catch (JSONException e) {
+            e.printStackTrace();
+        }
+    }
+
     public void initialize(CordovaInterface cordova, CordovaWebView webView) {
         super.initialize(cordova, webView);
     }
@@ -91,6 +115,9 @@ public class Auth extends CordovaPlugin {
         }
         if ("getUserInfo".equals(action)) {
             showAuthDialog(argsInString, callbackContext);
+            return true;
+        } else if ("getUserIdentity".equals(action)) {
+            getUserIdentity(argsInString, callbackContext);
             return true;
         }
         return false;

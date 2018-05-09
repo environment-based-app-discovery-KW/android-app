@@ -37,7 +37,7 @@ public class DigitalSignature {
         );
     }
 
-    private static String sign(String text, String strPrivateKey) {
+    public static String sign(String text, String strPrivateKey) {
         try {
             PrivateKey pk = loadPrivateKey(strPrivateKey);
             byte[] data = text.getBytes(charsetName);
@@ -52,7 +52,7 @@ public class DigitalSignature {
         }
     }
 
-    private static boolean verfiySignature(String signature, String original, String publicKey) {
+    public static boolean verfiySignature(String signature, String original, String publicKey) {
         try {
             Signature sig = Signature.getInstance(signAlgorithm);
             sig.initVerify(loadPublicKey(publicKey));
