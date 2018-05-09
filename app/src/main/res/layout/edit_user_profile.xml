@@ -52,7 +52,7 @@
         android:inputType="textNoSuggestions" />
 
     <Button
-        android:id="@+id/userProfileFinishButton"
+        android:id="@+id/userProfileSubmitButton"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         style="@style/Base.Widget.AppCompat.Button.Colored"

@@ -4,4 +4,8 @@
     <string name="launcher_name">@string/app_name</string>
     <string name="activity_name">@string/launcher_name</string>
     <string name="title_activity_main">MainActivity</string>
+    <string name="preference_file_key">app_discovery_shared_preference</string>
+    <string name="user_name_key">user_name</string>
+    <string name="user_email_key">user_email</string>
+    <string name="user_mobile_key">user_mobile</string>
 </resources>

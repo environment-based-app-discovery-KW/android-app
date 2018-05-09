@@ -1,27 +1,21 @@
 package com.appdiscovery.app;
 
-import android.annotation.SuppressLint;
 import android.content.Context;
-import android.content.Intent;
-import android.location.Location;
-import android.location.LocationManager;
-import android.net.Uri;
+import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.os.StrictMode;
-import android.support.annotation.NonNull;
-import android.support.design.widget.FloatingActionButton;
 import android.support.v4.app.ActivityCompat;
 import android.support.v7.app.AppCompatActivity;
-import android.support.v7.widget.LinearLayoutManager;
-import android.support.v7.widget.RecyclerView;
-import android.view.View;
-
-import com.appdiscovery.app.services.DiscoverApp;
-import com.appdiscovery.app.services.LocationWatcher;
-
-import java.io.IOException;
+import android.widget.Button;
+import android.widget.EditText;
+import android.widget.Toast;
 
 public class EditUserProfileActivity extends AppCompatActivity implements ActivityCompat.OnRequestPermissionsResultCallback {
+    EditText mUserProfileNameInput;
+    EditText mUserProfileEmailInput;
+    EditText mUserProfileMobileInput;
+    Button mSubmitButton;
+
     EditUserProfileActivity() {
         StrictMode.ThreadPolicy policy = new StrictMode.ThreadPolicy.Builder().permitAll().build();
         StrictMode.setThreadPolicy(policy);
@@ -30,6 +24,28 @@ public class EditUserProfileActivity extends AppCompatActivity implements Activi
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+        SharedPreferences sharedPref = getSharedPreferences(
+                getString(R.string.preference_file_key), Context.MODE_PRIVATE);
+
         setContentView(R.layout.edit_user_profile);
+        mUserProfileNameInput = findViewById(R.id.userProfileNameInput);
+        mUserProfileEmailInput = findViewById(R.id.userProfileEmailInput);
+        mUserProfileMobileInput = findViewById(R.id.userProfileMobileInput);
+
+        mUserProfileNameInput.setText(sharedPref.getString(getString(R.string.user_name_key), ""));
+        mUserProfileEmailInput.setText(sharedPref.getString(getString(R.string.user_email_key), ""));
+        mUserProfileMobileInput.setText(sharedPref.getString(getString(R.string.user_mobile_key), ""));
+
+        mSubmitButton = findViewById(R.id.userProfileSubmitButton);
+        mSubmitButton.setOnClickListener(view -> {
+            SharedPreferences.Editor editor = sharedPref.edit();
+            editor.putString(getString(R.string.user_name_key), mUserProfileNameInput.getText().toString());
+            editor.putString(getString(R.string.user_email_key), mUserProfileEmailInput.getText().toString());
+            editor.putString(getString(R.string.user_mobile_key), mUserProfileMobileInput.getText().toString());
+            editor.commit();
+
+            Toast.makeText(EditUserProfileActivity.this, "用户信息已经更新", Toast.LENGTH_LONG).show();
+            finish();
+        });
     }
 }
