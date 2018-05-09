@@ -11,6 +11,7 @@ import android.widget.TextView;
 public class UserInfoAuthorizationDialogFragment extends DialogFragment {
     String[] mRequestedPermissions;
     public View.OnClickListener mOnAccept;
+    public View.OnClickListener mOnReject;
 
     public static UserInfoAuthorizationDialogFragment newInstance(Bundle bundle) {
         UserInfoAuthorizationDialogFragment f = new UserInfoAuthorizationDialogFragment();
@@ -50,6 +51,7 @@ public class UserInfoAuthorizationDialogFragment extends DialogFragment {
             dismiss();
         });
         rejectButton.setOnClickListener(v1 -> {
+            mOnReject.onClick(v1);
             dismiss();
         });
         return v;
