@@ -2,11 +2,13 @@ package com.appdiscovery.app;
 
 import android.annotation.SuppressLint;
 import android.content.Context;
+import android.content.Intent;
 import android.location.Location;
 import android.location.LocationManager;
 import android.os.Bundle;
 import android.os.StrictMode;
 import android.support.annotation.NonNull;
+import android.support.design.widget.FloatingActionButton;
 import android.support.v4.app.ActivityCompat;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.LinearLayoutManager;
@@ -22,6 +24,7 @@ public class MainActivity extends AppCompatActivity implements ActivityCompat.On
     private RecyclerView mRecyclerView;
     private RecyclerView.Adapter mAdapter;
     private RecyclerView.LayoutManager mLayoutManager;
+    private FloatingActionButton mEditUserProfileBtn;
     private WebApp[] webapps;
 
     MainActivity() {
@@ -37,6 +40,11 @@ public class MainActivity extends AppCompatActivity implements ActivityCompat.On
         mRecyclerView.setHasFixedSize(true);
         mLocationWatcher.start();
         WebApp.setContext(this);
+        mEditUserProfileBtn = findViewById(R.id.edit_user_profile_btn);
+        mEditUserProfileBtn.setOnClickListener(view -> {
+            Intent intent = new Intent(MainActivity.this, EditUserProfileActivity.class);
+            startActivity(intent);
+        });
     }
 
     private LocationWatcher mLocationWatcher = new LocationWatcher(this, this::discoverAppByLocation);

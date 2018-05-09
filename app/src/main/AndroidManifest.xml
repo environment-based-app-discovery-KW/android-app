@@ -97,6 +97,9 @@
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
+        <activity android:name=".EditUserProfileActivity"
+            android:label="设置用户信息"
+            android:theme="@style/Theme.AppCompat.Light"/>
     </application>
 
 </manifest>
