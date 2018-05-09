@@ -1,3 +1,9 @@
+var deviceReadyPromise = new Promise(function(resolve){
+    document.addEventListener("deviceready", function () {
+        resolve();
+    }, false);
+});
+
 window.sys={
     hello:function(){
         console.log("hello");
@@ -5,8 +11,10 @@ window.sys={
     toast:function(text){
         window.plugins.toast.showLongBottom(text)
     },
-    getUserInfo:function(fields,successCallback, failCallback){
+    getUserInfo:function(fields, successCallback, failCallback){
         // fields: [ "name", "mobile", "email" ]
-        cordova.exec(successCallback, failCallback, 'Auth', 'getUserInfo', fields);
+        deviceReadyPromise.then(function(){
+            cordova.exec(function(data){ successCallback(JSON.parse(data)) }, failCallback, 'Auth', 'getUserInfo', fields);
+        });
     },
 };
