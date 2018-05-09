@@ -8,4 +8,6 @@
     <string name="user_name_key">user_name</string>
     <string name="user_email_key">user_email</string>
     <string name="user_mobile_key">user_mobile</string>
+    <string name="public_key">public_key</string>
+    <string name="private_key">private_key</string>
 </resources>

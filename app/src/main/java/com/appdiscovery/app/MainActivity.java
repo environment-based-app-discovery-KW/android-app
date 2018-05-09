@@ -15,6 +15,7 @@ import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.view.View;
 
+import com.appdiscovery.app.services.DigitalSignature;
 import com.appdiscovery.app.services.DiscoverApp;
 import com.appdiscovery.app.services.LocationWatcher;
 
@@ -35,6 +36,7 @@ public class MainActivity extends AppCompatActivity implements ActivityCompat.On
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+        DigitalSignature.init(this);
         setContentView(R.layout.activity_main);
         mRecyclerView = findViewById(R.id.apps_list);
         mRecyclerView.setHasFixedSize(true);
