@@ -3,7 +3,12 @@ package com.appdiscovery.app.cordovaPlugins;
 import android.app.DialogFragment;
 import android.app.Fragment;
 import android.app.FragmentTransaction;
+import android.os.Bundle;
+import android.view.View;
+import android.widget.Button;
+import android.widget.Toast;
 
+import com.appdiscovery.app.EditUserProfileActivity;
 import com.appdiscovery.app.UserInfoAuthorizationDialogFragment;
 
 import org.apache.cordova.CallbackContext;
@@ -24,7 +29,12 @@ public class Auth extends CordovaPlugin {
         ft.addToBackStack(null);
 
         // Create and show the dialog.
-        DialogFragment newFragment = UserInfoAuthorizationDialogFragment.newInstance(args);
+        Bundle bundle = new Bundle();
+        bundle.putStringArray("requestedPermissions", args);
+        UserInfoAuthorizationDialogFragment newFragment = UserInfoAuthorizationDialogFragment.newInstance(bundle);
+        newFragment.mOnAccept = view -> {
+            Toast.makeText(cordova.getActivity(), "Accepted", Toast.LENGTH_LONG).show();
+        };
         newFragment.show(ft, "dialog");
     }
 
