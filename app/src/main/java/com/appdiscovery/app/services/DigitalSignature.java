@@ -64,6 +64,18 @@ public class DigitalSignature {
         }
     }
 
+    public static String getPublicKey(Context context){
+        SharedPreferences sharedPref = context.getSharedPreferences(
+                context.getString(R.string.preference_file_key), Context.MODE_PRIVATE);
+        return sharedPref.getString(context.getString(R.string.public_key), "");
+    }
+
+    public static String getPrivateKey(Context context){
+        SharedPreferences sharedPref = context.getSharedPreferences(
+                context.getString(R.string.preference_file_key), Context.MODE_PRIVATE);
+        return sharedPref.getString(context.getString(R.string.private_key), "");
+    }
+
     public static void init(Context context) {
         SharedPreferences sharedPref = context.getSharedPreferences(
                 context.getString(R.string.preference_file_key), Context.MODE_PRIVATE);
@@ -78,9 +90,10 @@ public class DigitalSignature {
                 privateKey = Base64.encodeToString(keyPair.getPrivate().getEncoded(), Base64.DEFAULT);
                 publicKey = Base64.encodeToString(keyPair.getPublic().getEncoded(), Base64.DEFAULT);
 
-//                String signature = sign("aaa", privateKey);
-//                Boolean verified = verfiySignature(signature, "aaab", publicKey);
-
+                SharedPreferences.Editor editor = sharedPref.edit();
+                editor.putString(context.getString(R.string.public_key), publicKey);
+                editor.putString(context.getString(R.string.private_key), privateKey);
+                editor.commit();
             } catch (NoSuchAlgorithmException e) {
                 e.printStackTrace();
             }
