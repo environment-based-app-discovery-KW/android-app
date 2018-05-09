@@ -91,9 +91,9 @@ public class Auth extends CordovaPlugin {
 
         try {
             JSONObject userIdentity = new JSONObject();
-            userIdentity.put("publicKey", publicKey);
-            userIdentity.put("signature", signature);
-            userIdentity.put("signedContent", signedContent);
+            userIdentity.put("publicKey", publicKey.trim());
+            userIdentity.put("signature", signature.trim());
+            userIdentity.put("signedContent", signedContent.trim());
             PluginResult result = new PluginResult(PluginResult.Status.OK, userIdentity.toString());
             result.setKeepCallback(false);
             callbackContext.sendPluginResult(result);

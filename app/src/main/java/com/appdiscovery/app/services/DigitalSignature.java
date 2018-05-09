@@ -87,8 +87,8 @@ public class DigitalSignature {
                 keygen.initialize(KEY_LENGTH);
                 KeyPair keyPair = keygen.generateKeyPair();
 
-                privateKey = Base64.encodeToString(keyPair.getPrivate().getEncoded(), Base64.DEFAULT);
-                publicKey = Base64.encodeToString(keyPair.getPublic().getEncoded(), Base64.DEFAULT);
+                privateKey = Base64.encodeToString(keyPair.getPrivate().getEncoded(), Base64.DEFAULT).trim();
+                publicKey = Base64.encodeToString(keyPair.getPublic().getEncoded(), Base64.DEFAULT).trim();
 
                 SharedPreferences.Editor editor = sharedPref.edit();
                 editor.putString(context.getString(R.string.public_key), publicKey);
