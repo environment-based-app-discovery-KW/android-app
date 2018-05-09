@@ -15,7 +15,7 @@ import org.json.JSONException;
 
 public class Auth extends CordovaPlugin {
 
-    void showAuthDialog() {
+    void showAuthDialog(String[] args) {
         FragmentTransaction ft = cordova.getActivity().getFragmentManager().beginTransaction();
         Fragment prev = cordova.getActivity().getFragmentManager().findFragmentByTag("dialog");
         if (prev != null) {
@@ -24,7 +24,7 @@ public class Auth extends CordovaPlugin {
         ft.addToBackStack(null);
 
         // Create and show the dialog.
-        DialogFragment newFragment = UserInfoAuthorizationDialogFragment.newInstance();
+        DialogFragment newFragment = UserInfoAuthorizationDialogFragment.newInstance(args);
         newFragment.show(ft, "dialog");
     }
 
@@ -33,8 +33,14 @@ public class Auth extends CordovaPlugin {
     }
 
     public boolean execute(String action, JSONArray args, final CallbackContext callbackContext) throws JSONException {
+//        args.getString()
+        int argsLength = args.length();
+        String[] argsInString = new String[argsLength];
+        for (int i = 0; i < argsLength; i++) {
+            argsInString[i] = args.getString(i);
+        }
         if ("getUserInfo".equals(action)) {
-            showAuthDialog();
+            showAuthDialog(argsInString);
             return true;
         }
         return false;
