@@ -37,8 +37,6 @@ public class WebViewActivity extends CordovaActivity {
 
         String fileName = extras.getString("fileName");
 
-        Toast.makeText(this, fileName, Toast.LENGTH_SHORT).show();
-
         // Set by <content src="index.html" /> in config.xml
         loadUrl("file://"+fileName);
     }

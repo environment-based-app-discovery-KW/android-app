@@ -41,6 +41,7 @@ public class AppBuilder {
 
         AppBuilder.copyAssets(context);
 
+        sb.append("<script> window.$sysOnDevice = true; </script>");
         sb.append("<script src=\"cordova.js\"></script>");
         sb.append("<script src=\"sys.js\"></script>");
 
