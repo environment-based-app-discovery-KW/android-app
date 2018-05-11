@@ -35,7 +35,7 @@ public class UserInfoAuthorizationDialogFragment extends DialogFragment {
             dismiss();
         }
 
-        View v = inflater.inflate(R.layout.fragment_dialog, container, false);
+        View v = inflater.inflate(R.layout.fragment_auth_dialog, container, false);
 
         Button acceptButton = v.findViewById(R.id.accept_auth_request);
         Button rejectButton = v.findViewById(R.id.reject_auth_request);
