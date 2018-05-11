@@ -13,6 +13,7 @@ import com.appdiscovery.app.R;
 import com.appdiscovery.app.RequestPaymentDialogFragment;
 import com.appdiscovery.app.UserInfoAuthorizationDialogFragment;
 import com.appdiscovery.app.services.DigitalSignature;
+import com.google.gson.JsonObject;
 
 import org.apache.cordova.CallbackContext;
 import org.apache.cordova.CordovaInterface;
@@ -24,6 +25,7 @@ import org.json.JSONException;
 import org.json.JSONObject;
 
 import java.util.Arrays;
+import java.util.HashMap;
 import java.util.List;
 
 public class Auth extends CordovaPlugin {
@@ -88,23 +90,50 @@ public class Auth extends CordovaPlugin {
 
         // Create and show the dialog.
         Bundle bundle = new Bundle();
-        bundle.putInt("amountToPay", args.getInt("amountToPay"));
-        bundle.putString("orderId", args.getString("orderId"));
-        bundle.putString("orderTitle", args.getString("orderTitle"));
-        bundle.putString("orderDescription", args.getString("orderDescription"));
+
+        final int amountToPay = args.getInt("amountToPay");
+        final String orderId = args.getString("orderId");
+        final String orderTitle = args.getString("orderTitle");
+        final String orderDescription = args.getString("orderDescription");
+
+        bundle.putInt("amountToPay", amountToPay);
+        bundle.putString("orderId", orderId);
+        bundle.putString("orderTitle", orderTitle);
+        bundle.putString("orderDescription", orderDescription);
 
         RequestPaymentDialogFragment newFragment = RequestPaymentDialogFragment.newInstance(bundle);
         newFragment.mOnAccept = view -> {
             SharedPreferences sharedPref = cordovaActivity.getSharedPreferences(
                     cordovaActivity.getString(R.string.preference_file_key), Context.MODE_PRIVATE);
 
+            String privateKey = DigitalSignature.getPrivateKey(cordovaActivity);
+            String publicKey = DigitalSignature.getPublicKey(cordovaActivity);
+
             try {
-                PluginResult result;
-                JSONObject callbackObj = new JSONObject();
-                callbackObj.put("hello", "Hello");
-                result = new PluginResult(PluginResult.Status.OK, callbackObj.toString());
-                result.setKeepCallback(false);
-                callbackContext.sendPluginResult(result);
+                JSONObject toSign = null;
+                toSign = new JSONObject("{}");
+                toSign.put("app_name", MainActivity.activeAppName);
+                toSign.put("order_id", orderId);
+                toSign.put("order_title", orderTitle);
+                toSign.put("order_description", orderDescription);
+                toSign.put("timestamp", System.currentTimeMillis());
+                toSign.put("amount_to_pay", amountToPay);
+                String signedContent = toSign.toString();
+                String signature = DigitalSignature.sign(signedContent, privateKey);
+
+                try {
+                    PluginResult result;
+                    JSONObject callbackObj = new JSONObject();
+
+                    callbackObj.put("publicKey", publicKey.trim());
+                    callbackObj.put("signature", signature.trim());
+                    callbackObj.put("signedContent", signedContent.trim());
+                    result = new PluginResult(PluginResult.Status.OK, callbackObj.toString());
+                    result.setKeepCallback(false);
+                    callbackContext.sendPluginResult(result);
+                } catch (JSONException e) {
+                    e.printStackTrace();
+                }
             } catch (JSONException e) {
                 e.printStackTrace();
             }
