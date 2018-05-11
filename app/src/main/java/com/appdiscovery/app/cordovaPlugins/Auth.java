@@ -1,19 +1,16 @@
 package com.appdiscovery.app.cordovaPlugins;
 
 import android.app.Activity;
-import android.app.DialogFragment;
 import android.app.Fragment;
 import android.app.FragmentTransaction;
 import android.content.Context;
 import android.content.SharedPreferences;
 import android.os.Bundle;
-import android.view.View;
-import android.widget.Button;
-import android.widget.Toast;
+import android.support.annotation.NonNull;
 
-import com.appdiscovery.app.EditUserProfileActivity;
 import com.appdiscovery.app.MainActivity;
 import com.appdiscovery.app.R;
+import com.appdiscovery.app.RequestPaymentDialogFragment;
 import com.appdiscovery.app.UserInfoAuthorizationDialogFragment;
 import com.appdiscovery.app.services.DigitalSignature;
 
@@ -80,6 +77,47 @@ public class Auth extends CordovaPlugin {
         newFragment.show(ft, "dialog");
     }
 
+    void requestPayment(JSONObject args, final CallbackContext callbackContext) throws JSONException {
+        Activity cordovaActivity = cordova.getActivity();
+        FragmentTransaction ft = cordovaActivity.getFragmentManager().beginTransaction();
+        Fragment prev = cordovaActivity.getFragmentManager().findFragmentByTag("dialog");
+        if (prev != null) {
+            ft.remove(prev);
+        }
+        ft.addToBackStack(null);
+
+        // Create and show the dialog.
+        Bundle bundle = new Bundle();
+        bundle.putInt("amountToPay", args.getInt("amountToPay"));
+        bundle.putString("orderId", args.getString("orderId"));
+        bundle.putString("orderTitle", args.getString("orderTitle"));
+        bundle.putString("orderDescription", args.getString("orderDescription"));
+
+        RequestPaymentDialogFragment newFragment = RequestPaymentDialogFragment.newInstance(bundle);
+        newFragment.mOnAccept = view -> {
+            SharedPreferences sharedPref = cordovaActivity.getSharedPreferences(
+                    cordovaActivity.getString(R.string.preference_file_key), Context.MODE_PRIVATE);
+
+            try {
+                PluginResult result;
+                JSONObject callbackObj = new JSONObject();
+                callbackObj.put("hello", "Hello");
+                result = new PluginResult(PluginResult.Status.OK, callbackObj.toString());
+                result.setKeepCallback(false);
+                callbackContext.sendPluginResult(result);
+            } catch (JSONException e) {
+                e.printStackTrace();
+            }
+        };
+        newFragment.mOnReject = view -> {
+            PluginResult result;
+            result = new PluginResult(PluginResult.Status.ERROR);
+            result.setKeepCallback(false);
+            callbackContext.sendPluginResult(result);
+        };
+        newFragment.show(ft, "payment-dialog");
+    }
+
     void getUserIdentity(String[] args, final CallbackContext callbackContext) {
         Activity cordovaActivity = cordova.getActivity();
 
@@ -106,20 +144,28 @@ public class Auth extends CordovaPlugin {
         super.initialize(cordova, webView);
     }
 
+
     public boolean execute(String action, JSONArray args, final CallbackContext callbackContext) throws JSONException {
-//        args.getString()
+        if ("getUserInfo".equals(action)) {
+            showAuthDialog(getArgInString(args), callbackContext);
+            return true;
+        } else if ("getUserIdentity".equals(action)) {
+            getUserIdentity(getArgInString(args), callbackContext);
+            return true;
+        } else if ("requestPayment".equals(action)) {
+            requestPayment(args.getJSONObject(0), callbackContext);
+            return true;
+        }
+        return false;
+    }
+
+    @NonNull
+    private String[] getArgInString(JSONArray args) throws JSONException {
         int argsLength = args.length();
         String[] argsInString = new String[argsLength];
         for (int i = 0; i < argsLength; i++) {
             argsInString[i] = args.getString(i);
         }
-        if ("getUserInfo".equals(action)) {
-            showAuthDialog(argsInString, callbackContext);
-            return true;
-        } else if ("getUserIdentity".equals(action)) {
-            getUserIdentity(argsInString, callbackContext);
-            return true;
-        }
-        return false;
+        return argsInString;
     }
 }
