@@ -1,14 +1,20 @@
 package com.appdiscovery.app;
 
 import android.annotation.SuppressLint;
+import android.graphics.Bitmap;
+import android.graphics.BitmapFactory;
 import android.graphics.Color;
 import android.graphics.ColorSpace;
+import android.os.AsyncTask;
 import android.support.v7.widget.RecyclerView;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.ImageView;
 import android.widget.TextView;
+
+import java.io.InputStream;
 
 class AppListAdapter extends RecyclerView.Adapter<AppListAdapter.ViewHolder> {
     private final View.OnClickListener mOnClickListener;
@@ -44,6 +50,8 @@ class AppListAdapter extends RecyclerView.Adapter<AppListAdapter.ViewHolder> {
         TextView appTitleText = holder.mView.findViewById(R.id.appName);
         appTitleText.setText(webApps[position].name);
         TextView appDescText = holder.mView.findViewById(R.id.appDesc);
+        new DownloadImageTask(holder.mView.findViewById(R.id.app_image_view))
+                .execute(webApps[position].latest_version.logo_url);
         if (webApps[position].distance_in_m < 0) {
             appDescText.setText("附近的置顶APP");
             appDescText.setTextColor(Color.rgb(255, 200, 0));
@@ -56,5 +64,30 @@ class AppListAdapter extends RecyclerView.Adapter<AppListAdapter.ViewHolder> {
     @Override
     public int getItemCount() {
         return webApps.length;
+    }
+
+    private class DownloadImageTask extends AsyncTask<String, Void, Bitmap> {
+        ImageView bmImage;
+
+        public DownloadImageTask(ImageView bmImage) {
+            this.bmImage = bmImage;
+        }
+
+        protected Bitmap doInBackground(String... urls) {
+            String urldisplay = urls[0];
+            Bitmap mIcon11 = null;
+            try {
+                InputStream in = new java.net.URL(urldisplay).openStream();
+                mIcon11 = BitmapFactory.decodeStream(in);
+            } catch (Exception e) {
+                Log.e("Error", e.getMessage());
+                e.printStackTrace();
+            }
+            return mIcon11;
+        }
+
+        protected void onPostExecute(Bitmap result) {
+            bmImage.setImageBitmap(result);
+        }
     }
 }

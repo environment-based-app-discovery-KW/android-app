@@ -8,7 +8,7 @@
     android:background="@drawable/customborder">
 
     <ImageView
-        android:id="@+id/imageView"
+        android:id="@+id/app_image_view"
         android:layout_width="50dp"
         android:layout_height="50dp"
         app:srcCompat="@android:drawable/btn_plus" />
