@@ -21,6 +21,7 @@ public class WebApp {
     public String developer_id;
     public String created_at;
     public String updated_at;
+    public String launch_params_json;
     public WebAppDependency deps[];
     public WebAppVersion latest_version;
 
@@ -49,7 +50,7 @@ public class WebApp {
 
     public void launch() throws IOException {
         if (this.isAppDownloaded()) {
-            File file = AppBuilder.build(context, this.deps, this.latest_version.code_bundle_hash);
+            File file = AppBuilder.build(context, this.deps, this.latest_version.code_bundle_hash, this.launch_params_json);
             Intent myIntent = new Intent(context, WebViewActivity.class);
             myIntent.putExtra("fileName", file.getAbsolutePath());
             context.startActivity(myIntent);

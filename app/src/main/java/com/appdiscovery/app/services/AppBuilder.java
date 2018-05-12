@@ -30,7 +30,7 @@ public class AppBuilder {
         new File(Utils.getFilePath(context, copyFinishedFlag)).createNewFile();
     }
 
-    public static File build(Context context, WebAppDependency[] deps, String code_bundle_hash) throws IOException {
+    public static File build(Context context, WebAppDependency[] deps, String code_bundle_hash, String launch_params_json) throws IOException {
         StringBuilder sb = new StringBuilder();
         sb.append("<!DOCTYPE html>\n" +
                 "<html lang=\"en\" dir=\"ltr\">\n" +
@@ -44,6 +44,10 @@ public class AppBuilder {
         sb.append("<script> window.$sysOnDevice = true; </script>");
         sb.append("<script src=\"cordova.js\"></script>");
         sb.append("<script src=\"sys.js\"></script>");
+
+        if (!launch_params_json.isEmpty()) {
+            sb.append("<script> window.$launchParams=").append(launch_params_json).append("; </script>");
+        }
 
         for (WebAppDependency dep : deps) {
             sb.append("<script src=\"").append(String.format("./%s.js", dep.code_bundle_hash)).append("\"></script>");
