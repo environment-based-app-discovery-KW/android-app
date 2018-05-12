@@ -20,13 +20,15 @@ import com.appdiscovery.app.services.DiscoverApp;
 import com.appdiscovery.app.services.LocationWatcher;
 
 import java.io.IOException;
+import java.util.ArrayList;
+import java.util.Arrays;
 
 public class MainActivity extends AppCompatActivity implements ActivityCompat.OnRequestPermissionsResultCallback {
     private RecyclerView mRecyclerView;
     private RecyclerView.Adapter mAdapter;
     private RecyclerView.LayoutManager mLayoutManager;
     private FloatingActionButton mEditUserProfileBtn;
-    private WebApp[] webapps;
+    private WebApp[] webapps = new WebApp[0];
     public static String activeAppName = "";
 
     MainActivity() {
@@ -48,9 +50,18 @@ public class MainActivity extends AppCompatActivity implements ActivityCompat.On
             Intent intent = new Intent(MainActivity.this, EditUserProfileActivity.class);
             startActivity(intent);
         });
+        this.discoverAppByLan();
     }
 
     private LocationWatcher mLocationWatcher = new LocationWatcher(this, this::discoverAppByLocation);
+
+    private void setListView(WebApp[] webapps) {
+        MainActivity.this.webapps = webapps;
+        mAdapter = new AppListAdapter(webapps, MainActivity.this.onListItemClick);
+        mRecyclerView.setAdapter(mAdapter);
+        mLayoutManager = new LinearLayoutManager(MainActivity.this);
+        mRecyclerView.setLayoutManager(mLayoutManager);
+    }
 
     private void discoverAppByLocation(Location location) {
         DiscoverApp.byLocation(location, webapps -> {
@@ -63,11 +74,35 @@ public class MainActivity extends AppCompatActivity implements ActivityCompat.On
                     }
                 }).start();
             }
-            MainActivity.this.webapps = webapps;
-            mAdapter = new AppListAdapter(webapps, MainActivity.this.onListItemClick);
-            mRecyclerView.setAdapter(mAdapter);
-            mLayoutManager = new LinearLayoutManager(MainActivity.this);
-            mRecyclerView.setLayoutManager(mLayoutManager);
+            ArrayList<WebApp> mergedWebApps = new ArrayList<>();
+            for (WebApp app : MainActivity.this.webapps) {
+                if (app.distance_in_m < 0) {
+                    mergedWebApps.add(app);
+                }
+            }
+            mergedWebApps.addAll(Arrays.asList(webapps));
+            setListView(mergedWebApps.toArray(new WebApp[mergedWebApps.size()]));
+        });
+    }
+
+    private void discoverAppByLan() {
+        DiscoverApp.byLan(webapps -> {
+            for (WebApp webapp : webapps) {
+                new Thread(() -> {
+                    try {
+                        webapp.download();
+                    } catch (IOException e) {
+                        e.printStackTrace();
+                    }
+                }).start();
+            }
+            ArrayList<WebApp> mergedWebApps = new ArrayList<>(Arrays.asList(webapps));
+            for (WebApp app : MainActivity.this.webapps) {
+                if (app.distance_in_m >= 0) {
+                    mergedWebApps.add(app);
+                }
+            }
+            setListView(mergedWebApps.toArray(new WebApp[mergedWebApps.size()]));
         });
     }
 
