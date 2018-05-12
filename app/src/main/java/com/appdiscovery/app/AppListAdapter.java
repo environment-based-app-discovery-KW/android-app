@@ -1,6 +1,8 @@
 package com.appdiscovery.app;
 
 import android.annotation.SuppressLint;
+import android.graphics.Color;
+import android.graphics.ColorSpace;
 import android.support.v7.widget.RecyclerView;
 import android.util.Log;
 import android.view.LayoutInflater;
@@ -30,7 +32,7 @@ class AppListAdapter extends RecyclerView.Adapter<AppListAdapter.ViewHolder> {
     @Override
     public ViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
         View v = (View) LayoutInflater.from(parent.getContext())
-                .inflate(R.layout.my_text_view, parent, false);
+                .inflate(R.layout.app_list_item, parent, false);
         v.setOnClickListener(mOnClickListener);
         return new ViewHolder(v);
     }
@@ -42,7 +44,12 @@ class AppListAdapter extends RecyclerView.Adapter<AppListAdapter.ViewHolder> {
         TextView appTitleText = holder.mView.findViewById(R.id.appName);
         appTitleText.setText(webApps[position].name);
         TextView appDescText = holder.mView.findViewById(R.id.appDesc);
-        appDescText.setText(String.format("距离您 %.2f m", webApps[position].distance_in_m));
+        if (webApps[position].distance_in_m < 0) {
+            appDescText.setText("附近的置顶APP");
+            appDescText.setTextColor(Color.rgb(255, 200, 0));
+        } else {
+            appDescText.setText(String.format("距离您 %.2f m", webApps[position].distance_in_m));
+        }
 //        holder.mView.setText(mDataset[position]);
     }
 
