@@ -14,16 +14,21 @@ import java.util.Random;
 public class AppsWidgetProvider extends BroadcastReceiver {
     @Override
     public void onReceive(Context context, Intent intent) {
-        Log.d("UpdateWidgetsService", "onReceive");
-        RemoteViews updateViews = new RemoteViews(context.getPackageName(), R.layout.app_widget_layout);
-        Log.d("UpdateWidgetsService", "updating..");
-        updateViews.setTextViewText(R.id.update, String.valueOf(new Random().nextInt(100)));
-        Intent pintent = new Intent(context, AppsWidgetProvider.class);
-        pintent.setAction("use_custom_class");
-        PendingIntent pendingIntent = PendingIntent.getBroadcast(context, 0, pintent, PendingIntent.FLAG_UPDATE_CURRENT);
-        updateViews.setOnClickPendingIntent(R.id.update, pendingIntent);
-        ComponentName thisWidget = new ComponentName(context, AppsWidgetProvider.class);
-        AppWidgetManager manager = AppWidgetManager.getInstance(context);
-        manager.updateAppWidget(thisWidget, updateViews);
+        if ("SHOW_ACTIVITY".equals(intent.getAction())) {
+            Intent aintent = new Intent(context, EditUserProfileActivity.class);
+            context.startActivity(aintent);
+        } else {
+            Log.d("UpdateWidgetsService", "onReceive");
+            RemoteViews updateViews = new RemoteViews(context.getPackageName(), R.layout.app_widget_layout);
+            Log.d("UpdateWidgetsService", "updating..");
+            updateViews.setTextViewText(R.id.update, String.valueOf(new Random().nextInt(100)));
+            Intent pintent = new Intent(context, AppsWidgetProvider.class);
+            pintent.setAction("SHOW_ACTIVITY");
+            PendingIntent pendingIntent = PendingIntent.getBroadcast(context, 0, pintent, PendingIntent.FLAG_UPDATE_CURRENT);
+            updateViews.setOnClickPendingIntent(R.id.update, pendingIntent);
+            ComponentName thisWidget = new ComponentName(context, AppsWidgetProvider.class);
+            AppWidgetManager manager = AppWidgetManager.getInstance(context);
+            manager.updateAppWidget(thisWidget, updateViews);
+        }
     }
 }
