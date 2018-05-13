@@ -6,7 +6,7 @@
     android:versionName="1.0.0">
 
     <uses-sdk
-        android:minSdkVersion="24"
+        android:minSdkVersion="26"
         android:targetSdkVersion="26" />
 
     <supports-screens
@@ -88,8 +88,6 @@
                 android:name="android.support.FILE_PROVIDER_PATHS"
                 android:resource="@xml/camera_provider_paths" />
         </provider>
-
-        <service android:name=".services.UpdateWidgetsService" />
 
         <activity
             android:name=".MainActivity"
