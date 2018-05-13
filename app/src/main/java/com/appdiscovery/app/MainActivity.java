@@ -18,6 +18,7 @@ import android.view.View;
 import com.appdiscovery.app.services.DigitalSignature;
 import com.appdiscovery.app.services.DiscoverApp;
 import com.appdiscovery.app.services.LocationWatcher;
+import com.appdiscovery.app.services.WidgetAlarmService;
 
 import java.io.IOException;
 import java.util.ArrayList;
@@ -51,6 +52,7 @@ public class MainActivity extends AppCompatActivity implements ActivityCompat.On
             startActivity(intent);
         });
         this.discoverAppByLan();
+        WidgetAlarmService.start(this);
     }
 
     private LocationWatcher mLocationWatcher = new LocationWatcher(this, this::discoverAppByLocation);

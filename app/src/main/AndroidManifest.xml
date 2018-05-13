@@ -34,7 +34,8 @@
     <uses-permission
         android:name="android.permission.CAMERA"
         android:required="false" />
-    <uses-permission android:name="android.permission.RECEIVE_BOOT_COMPLETED"/>
+    <uses-permission android:name="android.permission.RECEIVE_BOOT_COMPLETED" />
+
     <uses-feature
         android:name="android.hardware.camera"
         android:required="false" />
@@ -88,6 +89,8 @@
                 android:resource="@xml/camera_provider_paths" />
         </provider>
 
+        <service android:name=".services.UpdateWidgetsService" />
+
         <activity
             android:name=".MainActivity"
             android:label="@string/title_activity_main"
@@ -97,14 +100,15 @@
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
-        <activity android:name=".EditUserProfileActivity"
+        <activity
+            android:name=".EditUserProfileActivity"
             android:label="设置用户信息"
-            android:theme="@style/Theme.AppCompat.Light"/>
+            android:theme="@style/Theme.AppCompat.Light" />
 
         <receiver
-            android:label="Apps"
-            android:name=".AppsWidgetProvider" >
-            <intent-filter >
+            android:name=".AppsWidgetProvider"
+            android:label="Apps">
+            <intent-filter>
                 <action android:name="android.appwidget.action.APPWIDGET_UPDATE" />
             </intent-filter>
 
@@ -113,7 +117,8 @@
                 android:resource="@xml/apps_widget_info" />
         </receiver>
 
-        <receiver android:name=".BootReceiver"
+        <receiver
+            android:name=".BootReceiver"
             android:enabled="true">
             <intent-filter>
                 <action android:name="android.intent.action.BOOT_COMPLETED"></action>

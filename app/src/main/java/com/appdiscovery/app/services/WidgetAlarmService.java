@@ -18,8 +18,7 @@ public class WidgetAlarmService {
         final Intent intent = new Intent(context, UpdateWidgetsService.class);
         final PendingIntent pending = PendingIntent.getService(context, 0, intent, 0);
         final AlarmManager alarm = (AlarmManager) context.getSystemService(Context.ALARM_SERVICE);
-        long interval = 1000 * 10; //TODO: adjust interval
+        long interval = 60000;
         alarm.setRepeating(AlarmManager.ELAPSED_REALTIME, SystemClock.elapsedRealtime(), interval, pending);
-
     }
 }
