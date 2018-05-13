@@ -53,6 +53,10 @@ public class MainActivity extends AppCompatActivity implements ActivityCompat.On
         });
         this.discoverAppByLan();
         WidgetAlarmService.start(this);
+
+        final Intent intent = new Intent(this, AppsWidgetProvider.class);
+        intent.setAction("UPDATE_WIDGET");
+        sendBroadcast(intent);
     }
 
     private LocationWatcher mLocationWatcher = new LocationWatcher(this, this::discoverAppByLocation);
