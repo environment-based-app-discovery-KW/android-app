@@ -48,7 +48,7 @@ class AppListAdapter extends RecyclerView.Adapter<AppListAdapter.ViewHolder> {
     public void onBindViewHolder(ViewHolder holder, int position) {
         Log.d("onBindViewHolder", String.valueOf(position));
         TextView appTitleText = holder.mView.findViewById(R.id.appName);
-        appTitleText.setText(webApps[position].name);
+        appTitleText.setText(webApps[position].display_name);
         TextView appDescText = holder.mView.findViewById(R.id.appDesc);
         new DownloadImageTask(holder.mView.findViewById(R.id.app_image_view))
                 .execute(webApps[position].latest_version.logo_url);

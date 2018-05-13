@@ -22,6 +22,7 @@ public class WebApp {
     public String created_at;
     public String updated_at;
     public String launch_params_json;
+    public String display_name;
     public WebAppDependency deps[];
     public WebAppVersion latest_version;
 
