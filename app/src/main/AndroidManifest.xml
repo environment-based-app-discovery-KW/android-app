@@ -100,6 +100,18 @@
         <activity android:name=".EditUserProfileActivity"
             android:label="设置用户信息"
             android:theme="@style/Theme.AppCompat.Light"/>
+
+        <receiver
+            android:label="Apps"
+            android:name=".AppsWidgetProvider" >
+            <intent-filter >
+                <action android:name="android.appwidget.action.APPWIDGET_UPDATE" />
+            </intent-filter>
+
+            <meta-data
+                android:name="android.appwidget.provider"
+                android:resource="@xml/apps_widget_info" />
+        </receiver>
     </application>
 
 </manifest>
