@@ -30,6 +30,11 @@ class AppsWidgetViewsFactory implements RemoteViewsService.RemoteViewsFactory {
     }
 
     @Override
+    public void onDataSetChanged() {
+        // no-op
+    }
+
+    @Override
     public void onDestroy() {
         // no-op
     }
@@ -72,7 +77,7 @@ class AppsWidgetViewsFactory implements RemoteViewsService.RemoteViewsFactory {
 
     @Override
     public int getViewTypeCount() {
-        return (1);
+        return 1;
     }
 
     @Override
@@ -82,11 +87,6 @@ class AppsWidgetViewsFactory implements RemoteViewsService.RemoteViewsFactory {
 
     @Override
     public boolean hasStableIds() {
-        return (true);
-    }
-
-    @Override
-    public void onDataSetChanged() {
-        // no-op
+        return false;
     }
 }

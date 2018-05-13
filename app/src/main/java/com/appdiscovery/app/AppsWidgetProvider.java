@@ -24,7 +24,7 @@ public class AppsWidgetProvider extends BroadcastReceiver {
     public static WebApp[] webapps = new WebApp[0];
 
     private void setListView(WebApp[] webapps) {
-        this.webapps = webapps;
+        AppsWidgetProvider.webapps = webapps;
         updateWidgetView();
     }
 
