@@ -18,7 +18,7 @@ public class WidgetAlarmService {
         isStarted = true;
 
         final Intent intent = new Intent(context, AppsWidgetProvider.class);
-        intent.setAction("use_custom_class");
+        intent.setAction("UPDATE_WIDGET");
         final PendingIntent pending = PendingIntent.getBroadcast(context, 0, intent, PendingIntent.FLAG_UPDATE_CURRENT);
         final AlarmManager alarm = (AlarmManager) context.getSystemService(Context.ALARM_SERVICE);
         long interval = 60000;
