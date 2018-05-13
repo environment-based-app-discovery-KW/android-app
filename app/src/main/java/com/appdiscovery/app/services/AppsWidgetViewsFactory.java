@@ -1,19 +1,18 @@
 package com.appdiscovery.app.services;
 
-import android.app.PendingIntent;
-import android.appwidget.AppWidgetManager;
 import android.content.Context;
 import android.content.Intent;
-import android.os.Bundle;
+import android.graphics.Bitmap;
+import android.graphics.BitmapFactory;
+import android.util.Log;
 import android.widget.RemoteViews;
 import android.widget.RemoteViewsService;
 
 import com.appdiscovery.app.AppsWidgetProvider;
-import com.appdiscovery.app.MainActivity;
 import com.appdiscovery.app.R;
 import com.appdiscovery.app.WebApp;
 
-import java.io.IOException;
+import java.io.InputStream;
 
 class AppsWidgetViewsFactory implements RemoteViewsService.RemoteViewsFactory {
     private Context context = null;
@@ -40,14 +39,28 @@ class AppsWidgetViewsFactory implements RemoteViewsService.RemoteViewsFactory {
         return (this.webapps.length);
     }
 
+    Bitmap downloadBitmap(String... urls) {
+        String urldisplay = urls[0];
+        Bitmap mIcon11 = null;
+        try {
+            InputStream in = new java.net.URL(urldisplay).openStream();
+            mIcon11 = BitmapFactory.decodeStream(in);
+        } catch (Exception e) {
+            Log.e("Error", e.getMessage());
+            e.printStackTrace();
+        }
+        return mIcon11;
+    }
+
     @Override
     public RemoteViews getViewAt(int position) {
         RemoteViews row = new RemoteViews(context.getPackageName(),
                 R.layout.app_widget_list_item);
-        row.setTextViewText(android.R.id.text1, this.webapps[position].display_name);
+        row.setImageViewBitmap(R.id.widget_app_image_view, downloadBitmap(this.webapps[position].latest_version.logo_url));
+        row.setTextViewText(R.id.widget_app_text, this.webapps[position].display_name);
         Intent i = new Intent();
         i.putExtra("position", position);
-        row.setOnClickFillInIntent(android.R.id.text1, i);
+        row.setOnClickFillInIntent(R.id.widget_app_text, i);
         return (row);
     }
 

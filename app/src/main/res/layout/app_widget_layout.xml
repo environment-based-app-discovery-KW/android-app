@@ -3,11 +3,12 @@
     android:id="@+id/app_widget_layout"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    android:orientation="vertical"
     android:layout_margin="8dip" android:background="#FF0000">
 
     <ListView
         android:id="@+id/widget_apps_list"
-        android:orientation="horizontal"
+        android:orientation="vertical"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:background="#00FF00" />
