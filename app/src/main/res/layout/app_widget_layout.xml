@@ -12,7 +12,7 @@
         android:layout_height="match_parent"
         android:orientation="vertical"
         android:columnWidth="50dp"
-        android:numColumns="5"
+        android:numColumns="6"
         android:stretchMode="spacingWidthUniform"
         />
 </LinearLayout>
