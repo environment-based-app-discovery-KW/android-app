@@ -61,6 +61,7 @@ class AppsWidgetViewsFactory implements RemoteViewsService.RemoteViewsFactory {
         Intent i = new Intent();
         i.putExtra("position", position);
         row.setOnClickFillInIntent(R.id.widget_app_text, i);
+        row.setOnClickFillInIntent(R.id.widget_app_image_view, i);
         return (row);
     }
 
