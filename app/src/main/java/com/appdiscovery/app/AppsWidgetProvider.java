@@ -38,12 +38,8 @@ public class AppsWidgetProvider extends BroadcastReceiver {
         }
     });
 
-    private void setListView(WebApp[] webapps, Context context) {
+    private void setListView(WebApp[] webapps) {
         this.webapps = webapps;
-//        mAdapter = new AppListAdapter(webapps, this.onListItemClick);
-//        mListView.setAdapter(mAdapter);
-//        mLayoutManager = new LinearLayoutManager(context);
-//        mListView.setLayoutManager(mLayoutManager);
     }
 
     private void discoverAppByLocation(Location location, Context context) {
@@ -64,7 +60,7 @@ public class AppsWidgetProvider extends BroadcastReceiver {
                 }
             }
             mergedWebApps.addAll(Arrays.asList(webapps));
-            setListView(mergedWebApps.toArray(new WebApp[mergedWebApps.size()]), context);
+            setListView(mergedWebApps.toArray(new WebApp[mergedWebApps.size()]));
         });
     }
 
@@ -85,7 +81,7 @@ public class AppsWidgetProvider extends BroadcastReceiver {
                     mergedWebApps.add(app);
                 }
             }
-            setListView(mergedWebApps.toArray(new WebApp[mergedWebApps.size()]), context);
+            setListView(mergedWebApps.toArray(new WebApp[mergedWebApps.size()]));
         });
     }
 
