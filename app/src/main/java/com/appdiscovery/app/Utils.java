@@ -25,6 +25,10 @@ public class Utils {
     }
 
     public static String downloadFile(Context context, String hash, String ext) {
+        return downloadFile(context, hash, ext, false);
+    }
+
+    public static String downloadFile(Context context, String hash, String ext, boolean bypassLan) {
         String filePath = getFilePath(context, hash + ext);
         File downloadedFile = new File(filePath);
         if (downloadedFile.exists()) {
@@ -33,16 +37,24 @@ public class Utils {
 
         OkHttpClient client = new OkHttpClient();
         Request request = new Request.Builder()
-                .url(Config.getRepoServerAddr() + "/file/download?hash=" + hash)
+                .url(Config.getRepoServerAddr(bypassLan) + "/file/download?hash=" + hash)
                 .get()
                 .build();
         try {
             Response response = client.newCall(request).execute();
+            if (response.code() == 404) {
+                if (!bypassLan) {
+                    // bypass and download again
+                    return downloadFile(context, hash, ext, true);
+                } else {
+                    throw new Exception("Not found");
+                }
+            }
             BufferedSink sink = Okio.buffer(Okio.sink(downloadedFile));
             sink.writeAll(response.body().source());
             sink.close();
             return downloadedFile.getAbsolutePath();
-        } catch (IOException e) {
+        } catch (Exception e) {
             e.printStackTrace();
         }
         return null;
