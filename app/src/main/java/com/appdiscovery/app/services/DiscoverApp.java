@@ -33,7 +33,7 @@ public class DiscoverApp {
     public static void byLan(Consumer<WebApp[]> callback) {
         OkHttpClient client = new OkHttpClient();
         Request request = new Request.Builder()
-                .url(Config.getInstance().lanServerAddr + "/app/lan-discover")
+                .url(Config.getInstance().lanRepoServerAddr + "/app/lan-discover")
                 .get()
                 .build();
         try {
