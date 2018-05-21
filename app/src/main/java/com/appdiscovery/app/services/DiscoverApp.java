@@ -17,7 +17,7 @@ public class DiscoverApp {
     public static void byLocation(Location location, Consumer<WebApp[]> callback) {
         OkHttpClient client = new OkHttpClient();
         Request request = new Request.Builder()
-                .url(Config.getInstance().repoServerAddr + "/app/discover?lat=" + location.getLatitude() + "&lng=" + location.getLongitude())
+                .url(Config.getRepoServerAddr() + "/app/discover?lat=" + location.getLatitude() + "&lng=" + location.getLongitude())
                 .get()
                 .build();
         try {
