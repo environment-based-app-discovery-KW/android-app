@@ -36,6 +36,7 @@ public class MainActivity extends AppCompatActivity implements ActivityCompat.On
     MainActivity() {
         StrictMode.ThreadPolicy policy = new StrictMode.ThreadPolicy.Builder().permitAll().build();
         StrictMode.setThreadPolicy(policy);
+        LanServerAvailabilityMonitor.start();
     }
 
     @Override
@@ -52,9 +53,8 @@ public class MainActivity extends AppCompatActivity implements ActivityCompat.On
             Intent intent = new Intent(MainActivity.this, EditUserProfileActivity.class);
             startActivity(intent);
         });
-        this.discoverAppByLan();
         WidgetAlarmService.start(this);
-        LanServerAvailabilityMonitor.start();
+        this.discoverAppByLan();
 
         final Intent intent = new Intent(this, AppsWidgetProvider.class);
         intent.setAction("UPDATE_WIDGET");

@@ -26,27 +26,31 @@ public class LanServerAvailabilityMonitor {
             return;
         }
         isStarted = true;
-
+        checkAvailability();
         Handler handler = new Handler();
         int interval = 5000;
         handler.postDelayed(new Runnable() {
             public void run() {
                 //do something
-                OkHttpClient client = new OkHttpClient();
-                Request request = new Request.Builder()
-                        .url(Config.getInstance().lanRepoServerAddr)
-                        .get()
-                        .build();
-                try {
-                    Response response = client.newCall(request).execute();
-                    JSONObject jsonObj = new JSONObject(response.body().string());
-                    lanAvailable = jsonObj.getBoolean("online");
-                } catch (IOException | JSONException ignored) {
-                    lanAvailable = false;
-                }
-                Log.d(TAG, "Lan server availability: " + String.valueOf(lanAvailable));
+                checkAvailability();
                 handler.postDelayed(this, interval);
             }
         }, interval);
+    }
+
+    public static void checkAvailability() {
+        OkHttpClient client = new OkHttpClient();
+        Request request = new Request.Builder()
+                .url(Config.getInstance().lanRepoServerAddr)
+                .get()
+                .build();
+        try {
+            Response response = client.newCall(request).execute();
+            JSONObject jsonObj = new JSONObject(response.body().string());
+            lanAvailable = jsonObj.getBoolean("online");
+        } catch (IOException | JSONException ignored) {
+            lanAvailable = false;
+        }
+        Log.d(TAG, "Lan server availability: " + String.valueOf(lanAvailable));
     }
 }
