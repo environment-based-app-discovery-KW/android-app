@@ -3,12 +3,14 @@ package com.appdiscovery.app;
 import android.content.Context;
 import android.content.res.AssetManager;
 
+import com.appdiscovery.app.services.LanServerAvailabilityMonitor;
 import com.google.common.io.ByteStreams;
 
 import java.io.File;
 import java.io.FileOutputStream;
 import java.io.IOException;
 import java.io.InputStream;
+import java.net.SocketTimeoutException;
 
 import okhttp3.OkHttpClient;
 import okhttp3.Request;
@@ -54,6 +56,14 @@ public class Utils {
             sink.writeAll(response.body().source());
             sink.close();
             return downloadedFile.getAbsolutePath();
+        } catch (SocketTimeoutException e) {
+            if (LanServerAvailabilityMonitor.lanAvailable) {
+                // LAN server not available, retry without it
+                LanServerAvailabilityMonitor.lanAvailable = false;
+                return downloadFile(context, hash, ext, bypassLan);
+            } else {
+                e.printStackTrace();
+            }
         } catch (Exception e) {
             e.printStackTrace();
         }

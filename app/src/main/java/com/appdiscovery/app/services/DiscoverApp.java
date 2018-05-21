@@ -7,6 +7,7 @@ import com.appdiscovery.app.WebApp;
 import com.google.gson.Gson;
 
 import java.io.IOException;
+import java.net.SocketTimeoutException;
 import java.util.function.Consumer;
 
 import okhttp3.OkHttpClient;
@@ -25,6 +26,14 @@ public class DiscoverApp {
             String jsonData = response.body().string();
             Gson gson = new Gson();
             callback.accept(gson.fromJson(jsonData, WebApp[].class));
+        } catch (SocketTimeoutException e) {
+            if (LanServerAvailabilityMonitor.lanAvailable) {
+                // LAN server not available, retry without it
+                LanServerAvailabilityMonitor.lanAvailable = false;
+                byLocation(location, callback);
+            } else {
+                e.printStackTrace();
+            }
         } catch (IOException e) {
             e.printStackTrace();
         }
