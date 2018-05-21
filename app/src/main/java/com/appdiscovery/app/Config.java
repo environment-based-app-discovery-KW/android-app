@@ -8,6 +8,7 @@ public class Config {
     }
 
     public String repoServerAddr = "http://ad-app-repo-dynamic.kevinwang.cc:888";
+    public String canonicalRepoServerAddr = "http://ad-central-server.kevinwang.cc:888";
     public String centralServerAddr = "http://ad-central-server.kevinwang.cc:889";
 
     public String lanServerAddr = "http://lan-app-repo-server.appd";
